@@ -18,6 +18,7 @@ const Home: NextPage = () => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <div>{!user.isSignedIn ? <SignInButton /> : <SignOutButton />}</div>
+            {user.isSignedIn && <RecordMatch />}
             <div>
                 {data?.map((match) => (
                     <div key={match.id}>
@@ -26,6 +27,35 @@ const Home: NextPage = () => {
                 ))}
             </div>
         </>
+    );
+};
+
+const RecordMatch = () => {
+    const { user } = useUser();
+    const { data: users } = api.user.getAll.useQuery();
+
+    if (!user) return null;
+
+    return (
+        <div>
+            <form>
+                <label>Opponent</label>
+                <select placeholder="Select an Opponent">
+                    <option value="" disabled selected>
+                        Select an Opponent
+                    </option>
+                    {users?.map((user) => (
+                        <option key={user.id} value={user.id}>
+                            {user.firstName} {user.lastName}
+                        </option>
+                    ))}
+                </select>
+                <label>Your Score</label>
+                <input />
+                <label>{`Opponent's Score`}</label>
+                <input />
+            </form>
+        </div>
     );
 };
 
