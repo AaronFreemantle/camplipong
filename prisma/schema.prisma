@@ -11,4 +11,16 @@ datasource db {
 model Match {
     id        String   @id @default(cuid())
     createdAt DateTime @default(now())
+
+    scoreOne Int
+    ScoreTwo Int
+
+    playerOneId String
+    playerTwoId String
+
+    ranked Boolean @default(false)
+
+    @@index([playerOneId])
+    @@index([playerTwoId])
+    @@index([ranked])
 }
