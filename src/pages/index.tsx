@@ -1,4 +1,4 @@
-import { SignInButton, SignOutButton, useUser } from "@clerk/nextjs";
+import { useUser } from "@clerk/nextjs";
 import { type NextPage } from "next";
 import Head from "next/head";
 import { useState } from "react";
@@ -14,7 +14,6 @@ const Home: NextPage = () => {
                 <meta name="description" content="Camplify Ping Pong Leaderboard" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            {!user.isSignedIn ? <SignInButton /> : <SignOutButton />}
             {user.isSignedIn && <AddMatch />}
             <MatchList />
         </>
@@ -64,15 +63,22 @@ const AddMatch = () => {
 };
 
 const MatchList = () => {
-    const { data: matches } = api.match.getAll.useQuery();
+    const { data: matchesWithPlayers } = api.match.getAll.useQuery();
     return (
         <>
-            {matches?.map((match) => (
-                <div key={match.id}>
-                    {match.playerOneId} {match.playerOneScore}
-                    {match.playerTwoId} {match.playerTwoScore}
-                </div>
-            ))}
+            {matchesWithPlayers?.map((matchWithPlayers) => {
+                const {
+                    match,
+                    players: { playerOne, playerTwo },
+                } = matchWithPlayers;
+
+                return (
+                    <div key={match.id}>
+                        {playerOne.firstName} {playerOne.lastName} {match.playerOneScore}
+                        {playerTwo.firstName} {playerTwo.lastName} {match.playerTwoScore}
+                    </div>
+                );
+            })}
         </>
     );
 };
