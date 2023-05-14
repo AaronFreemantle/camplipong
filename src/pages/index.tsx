@@ -14,8 +14,10 @@ const Home: NextPage = () => {
                 <meta name="description" content="Camplify Ping Pong Leaderboard" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            {user.isSignedIn && <AddMatch />}
-            <MatchList />
+            <main className="md:w-max-screen-lg flex flex-col items-center md:mx-auto md:my-0">
+                {user.isSignedIn && <AddMatch />}
+                <MatchList />
+            </main>
         </>
     );
 };
@@ -39,7 +41,8 @@ const AddMatch = () => {
     };
 
     return (
-        <div>
+        <section className="m-2">
+            <h2 className="flex justify-center text-2xl">Add Match</h2>
             <form onSubmit={handleSubmit}>
                 <label>Opponent</label>
                 <select defaultValue="" placeholder="Select an Opponent" onChange={(e) => setOpponent(e.target.value)}>
@@ -58,14 +61,15 @@ const AddMatch = () => {
                 <input type="number" inputMode="numeric" onChange={(e) => setPlayerTwoScore(+e.target.value)} />
                 <input type="submit" value="Submit" />
             </form>
-        </div>
+        </section>
     );
 };
 
 const MatchList = () => {
     const { data: matchesWithPlayers } = api.match.getAll.useQuery();
     return (
-        <>
+        <section className="m-2">
+            <h2 className="flex justify-center text-2xl">Match List</h2>
             {matchesWithPlayers?.map((matchWithPlayers) => {
                 const {
                     match,
@@ -79,7 +83,7 @@ const MatchList = () => {
                     </div>
                 );
             })}
-        </>
+        </section>
     );
 };
 
