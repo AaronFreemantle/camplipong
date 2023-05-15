@@ -5,5 +5,9 @@ export default {
     theme: {
         extend: {},
     },
-    plugins: [],
+    plugins: [
+        require("@catppuccin/tailwindcss")({
+            defaultFlavour: "frappe",
+        }),
+    ],
 } satisfies Config;
