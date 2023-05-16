@@ -35,7 +35,16 @@ const addUserDataToMatches = async (matches: Match[]) => {
 
 export const matchRouter = createTRPCRouter({
     getAll: publicProcedure.query(async ({ ctx }) => {
-        return addUserDataToMatches(await ctx.prisma.match.findMany());
+        return addUserDataToMatches(
+            await ctx.prisma.match.findMany({
+                orderBy: [
+                    {
+                        createdAt: "desc",
+                    },
+                ],
+                take: 50,
+            })
+        );
     }),
 
     create: privateProcedure

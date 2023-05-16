@@ -7,6 +7,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "~
 import { api } from "~/utils/api";
 import { Avatar, AvatarImage } from "~/components/ui/avatar";
 import { Button } from "~/components/ui/button";
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "~/components/ui/table";
+import { Label } from "~/components/ui/label";
+import { Switch } from "~/components/ui/switch";
+import { Card, CardContent } from "~/components/ui/card";
 
 const Home: NextPage = () => {
     const user = useUser();
@@ -20,9 +24,9 @@ const Home: NextPage = () => {
             </Head>
             <main className="md:w-max-screen-lg bg-mauve-300 flex flex-col items-center md:mx-auto md:my-0">
                 {user.isSignedIn && <AddMatch />}
-                <div>
+                <div className="grid grid-cols-2">
                     <MatchList />
-                    {/* <LeaderBoard /> */}
+                    <LeaderBoard />
                 </div>
             </main>
         </>
@@ -56,12 +60,22 @@ const AddMatch = () => {
             <h2 className="flex justify-center text-2xl">Add Match</h2>
             <form onSubmit={handleSubmit} className="flex flex-col items-center gap-5">
                 <div className="w-full items-center gap-1.5">
-                    <label>Your Score</label>
-                    <Input type="number" inputMode="numeric" onChange={(e) => setPlayerOneScore(+e.target.value)} />
+                    <Label htmlFor="yourScore">Your Score</Label>
+                    <Input
+                        id="yourScore"
+                        type="number"
+                        inputMode="numeric"
+                        onChange={(e) => setPlayerOneScore(+e.target.value)}
+                    />
                 </div>
                 <div className="w-full items-center gap-1.5">
-                    <label>{`Opponent's Score`}</label>
-                    <Input type="text" inputMode="numeric" onChange={(e) => setPlayerTwoScore(+e.target.value)} />
+                    <Label htmlFor="opponentScore">{`Opponent's Score`}</Label>
+                    <Input
+                        id="opponentScore"
+                        type="text"
+                        inputMode="numeric"
+                        onChange={(e) => setPlayerTwoScore(+e.target.value)}
+                    />
                 </div>
                 <Select onValueChange={(value) => setOpponent(value)}>
                     <SelectTrigger className="w-full">
@@ -83,6 +97,10 @@ const AddMatch = () => {
                         })}
                     </SelectContent>
                 </Select>
+                <div className="flex items-center space-x-2">
+                    <Switch id="ranked" />
+                    <Label htmlFor="ranked">Ranked</Label>
+                </div>
                 <Button type="submit" value="Submit">
                     Submit
                 </Button>
@@ -95,7 +113,7 @@ const MatchList = () => {
     const { data: matchesWithPlayers } = api.match.getAll.useQuery();
     return (
         <section className="m-2">
-            <h2 className="flex justify-center text-2xl">Match List</h2>
+            <h2 className="flex justify-center text-2xl">Recent Matches</h2>
             {matchesWithPlayers?.map((matchWithPlayers) => {
                 const {
                     match,
@@ -103,14 +121,42 @@ const MatchList = () => {
                 } = matchWithPlayers;
 
                 return (
-                    <div key={match.id}>
-                        {playerOne.firstName} {playerOne.lastName} {match.playerOneScore}
-                        {playerTwo.firstName} {playerTwo.lastName} {match.playerTwoScore}
-                    </div>
+                    <Card key={match.id} className="bg-background">
+                        <CardContent className="p-4">
+                            <ul className="flex flex-row items-center justify-center gap-5">
+                                <li className="flex flex-row items-center gap-3">
+                                    <Avatar className="h-8 w-8">
+                                        <AvatarImage src={playerOne.profileImageUrl} alt={playerOne.firstName ?? ""} />
+                                    </Avatar>
+                                    <p>
+                                        {playerOne.firstName} {playerOne.lastName}
+                                    </p>
+                                    <p>{match.playerOneScore}</p>
+                                </li>
+                                <li className="flex flex-row items-center gap-3">
+                                    <p>{match.playerTwoScore}</p>
+                                    <p>
+                                        {playerTwo.firstName} {playerTwo.lastName}
+                                    </p>
+                                    <Avatar className="h-8 w-8">
+                                        <AvatarImage src={playerTwo.profileImageUrl} alt={playerTwo.firstName ?? ""} />
+                                    </Avatar>
+                                </li>
+                            </ul>
+                        </CardContent>
+                    </Card>
                 );
             })}
         </section>
     );
 };
 
+const LeaderBoard = () => {
+    return (
+        <section className="m-2">
+            <h2 className="flex justify-center text-2xl">Leaderboard</h2>
+            <Table></Table>
+        </section>
+    );
+};
 export default Home;

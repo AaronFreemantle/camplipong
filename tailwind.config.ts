@@ -72,10 +72,5 @@ export default {
             },
         },
     },
-    plugins: [
-        require("tailwindcss-animate"),
-        require("@catppuccin/tailwindcss")({
-            defaultFlavour: "frappe",
-        }),
-    ],
+    plugins: [require("tailwindcss-animate")],
 } satisfies Config;
