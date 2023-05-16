@@ -24,7 +24,7 @@ const Home: NextPage = () => {
             </Head>
             <main className="md:w-max-screen-lg bg-mauve-300 flex flex-col items-center md:mx-auto md:my-0">
                 {user.isSignedIn && <AddMatch />}
-                <div className="grid grid-cols-2">
+                <div className="grid-cols-2 md:grid">
                     <MatchList />
                     <LeaderBoard />
                 </div>
@@ -112,8 +112,8 @@ const AddMatch = () => {
 const MatchList = () => {
     const { data: matchesWithPlayers } = api.match.getAll.useQuery();
     return (
-        <section className="m-2">
-            <h2 className="flex justify-center text-2xl">Recent Matches</h2>
+        <section className="m-4">
+            <h2 className="m-2 flex justify-center text-2xl">Recent Matches</h2>
             {matchesWithPlayers?.map((matchWithPlayers) => {
                 const {
                     match,
@@ -154,7 +154,7 @@ const MatchList = () => {
 const LeaderBoard = () => {
     return (
         <section className="m-2">
-            <h2 className="flex justify-center text-2xl">Leaderboard</h2>
+            <h2 className="m-2 flex justify-center text-2xl">Leaderboard</h2>
             <Table></Table>
         </section>
     );
