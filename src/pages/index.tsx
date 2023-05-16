@@ -1,10 +1,12 @@
 import { useUser } from "@clerk/nextjs";
 import { type NextPage } from "next";
 import Head from "next/head";
-import Image from "next/image";
+import { Input } from "~/components/ui/input";
 import { useState } from "react";
-import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "~/components/ui/select";
 import { api } from "~/utils/api";
+import { Avatar, AvatarImage } from "~/components/ui/avatar";
+import { Button } from "~/components/ui/button";
 
 const Home: NextPage = () => {
     const user = useUser();
@@ -52,29 +54,38 @@ const AddMatch = () => {
     return (
         <section className="m-2">
             <h2 className="flex justify-center text-2xl">Add Match</h2>
-            <form onSubmit={handleSubmit}>
-                <Avatar>
-                    <AvatarImage src={currentUser.profileImageUrl} alt={currentUser.firstName ?? ""} />
-                </Avatar>
-                <label>Your Score</label>
-                <input type="number" inputMode="numeric" onChange={(e) => setPlayerOneScore(+e.target.value)} />
-                <label>Opponent</label>
-                <select defaultValue="" placeholder="Select an Opponent" onChange={(e) => setOpponent(e.target.value)}>
-                    <option value="" disabled>
-                        Select an Opponent
-                    </option>
-                    {users?.map((user) => {
-                        if (user.id === currentUser.id) return null;
-                        return (
-                            <option key={user.id} value={user.id}>
-                                {user.firstName} {user.lastName}
-                            </option>
-                        );
-                    })}
-                </select>
-                <label>{`Opponent's Score`}</label>
-                <input type="number" inputMode="numeric" onChange={(e) => setPlayerTwoScore(+e.target.value)} />
-                <input type="submit" value="Submit" />
+            <form onSubmit={handleSubmit} className="flex flex-col items-center gap-5">
+                <div className="w-full items-center gap-1.5">
+                    <label>Your Score</label>
+                    <Input type="number" inputMode="numeric" onChange={(e) => setPlayerOneScore(+e.target.value)} />
+                </div>
+                <div className="w-full items-center gap-1.5">
+                    <label>{`Opponent's Score`}</label>
+                    <Input type="text" inputMode="numeric" onChange={(e) => setPlayerTwoScore(+e.target.value)} />
+                </div>
+                <Select onValueChange={(value) => setOpponent(value)}>
+                    <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Select an Opponent" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        {users?.map((user) => {
+                            if (user.id === currentUser.id) return null;
+                            return (
+                                <SelectItem key={user.id} value={user.id}>
+                                    <div className="flex flex-row items-center justify-center gap-1">
+                                        <Avatar className="h-8 w-8">
+                                            <AvatarImage src={user.profileImageUrl} alt={user.firstName ?? ""} />
+                                        </Avatar>
+                                        {user.firstName} {user.lastName}
+                                    </div>
+                                </SelectItem>
+                            );
+                        })}
+                    </SelectContent>
+                </Select>
+                <Button type="submit" value="Submit">
+                    Submit
+                </Button>
             </form>
         </section>
     );

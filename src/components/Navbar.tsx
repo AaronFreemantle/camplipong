@@ -1,9 +1,10 @@
 import { useUser, SignInButton, SignOutButton } from "@clerk/nextjs";
+import { Avatar, AvatarImage } from "~/components/ui/avatar";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function Navbar() {
-    const user = useUser();
+    const { user, isSignedIn } = useUser();
 
     return (
         <nav className="md:mx-auto md:my-0 md:max-w-screen-xl">
@@ -16,10 +17,17 @@ export default function Navbar() {
                         </h1>
                     </Link>
                 </li>
-                <li>
+                <li className="px-10">
                     <Link href="/faq">FAQ</Link>
                 </li>
-                <li>{!user.isSignedIn ? <SignInButton /> : <SignOutButton />}</li>
+                <li>{!isSignedIn ? <SignInButton /> : <SignOutButton />}</li>
+                {isSignedIn && (
+                    <li>
+                        <Avatar>
+                            <AvatarImage src={user.profileImageUrl} alt={user.firstName ?? ""} />
+                        </Avatar>
+                    </li>
+                )}
             </ul>
         </nav>
     );
