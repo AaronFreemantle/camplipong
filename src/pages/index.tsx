@@ -3,6 +3,7 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import { useState } from "react";
+import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { api } from "~/utils/api";
 
 const Home: NextPage = () => {
@@ -52,6 +53,9 @@ const AddMatch = () => {
         <section className="m-2">
             <h2 className="flex justify-center text-2xl">Add Match</h2>
             <form onSubmit={handleSubmit}>
+                <Avatar>
+                    <AvatarImage src={currentUser.profileImageUrl} alt={currentUser.firstName ?? ""} />
+                </Avatar>
                 <label>Your Score</label>
                 <input type="number" inputMode="numeric" onChange={(e) => setPlayerOneScore(+e.target.value)} />
                 <label>Opponent</label>
@@ -60,7 +64,7 @@ const AddMatch = () => {
                         Select an Opponent
                     </option>
                     {users?.map((user) => {
-                        if (user.id !== currentUser.id) return null;
+                        if (user.id === currentUser.id) return null;
                         return (
                             <option key={user.id} value={user.id}>
                                 {user.firstName} {user.lastName}
