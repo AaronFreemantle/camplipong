@@ -60,26 +60,34 @@ export const matchRouter = createTRPCRouter({
         .mutation(async ({ ctx, input }) => {
             const { session } = ctx;
 
-            const playerOne = await clerkClient.users.getUser(session.userId);
-            const playerTwo = await clerkClient.users.getUser(input.playerTwoId);
+            let playerOneDiff = 0;
+            let playerTwoDiff = 0;
 
-            const { playerOneDiff, playerTwoDiff } = calculateEloDiff(
-                (playerOne.publicMetadata.elo as number) || 1000,
-                (playerTwo.publicMetadata.elo as number) || 1000,
-                input.playerOneScore,
-                input.playerTwoScore
-            );
+            if (input.ranked) {
+                const playerOne = await clerkClient.users.getUser(session.userId);
+                const playerTwo = await clerkClient.users.getUser(input.playerTwoId);
 
-            await clerkClient.users.updateUser(playerOne.id, {
-                publicMetadata: {
-                    elo: ((playerOne.publicMetadata.elo as number) || 1000) + playerOneDiff,
-                },
-            });
-            await clerkClient.users.updateUser(playerTwo.id, {
-                publicMetadata: {
-                    elo: ((playerTwo.publicMetadata.elo as number) || 1000) + playerTwoDiff,
-                },
-            });
+                const diffs = calculateEloDiff(
+                    (playerOne.publicMetadata.elo as number) || 1000,
+                    (playerTwo.publicMetadata.elo as number) || 1000,
+                    input.playerOneScore,
+                    input.playerTwoScore
+                );
+
+                playerOneDiff = diffs.playerOneDiff;
+                playerTwoDiff = diffs.playerTwoDiff;
+
+                await clerkClient.users.updateUser(playerOne.id, {
+                    publicMetadata: {
+                        elo: ((playerOne.publicMetadata.elo as number) || 1000) + playerOneDiff,
+                    },
+                });
+                await clerkClient.users.updateUser(playerTwo.id, {
+                    publicMetadata: {
+                        elo: ((playerTwo.publicMetadata.elo as number) || 1000) + playerTwoDiff,
+                    },
+                });
+            }
 
             console.log("Match created: ", input);
             const match = await ctx.prisma.match.create({
