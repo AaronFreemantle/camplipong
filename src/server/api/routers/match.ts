@@ -3,6 +3,7 @@ import { type Match } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { createTRPCRouter, privateProcedure, publicProcedure } from "~/server/api/trpc";
+import { calculateEloDiff } from "~/utils/elo";
 
 const addUserDataToMatches = async (matches: Match[]) => {
     const playerOneIds = matches.map((match) => match.playerOneId);
@@ -59,9 +60,24 @@ export const matchRouter = createTRPCRouter({
         .mutation(async ({ ctx, input }) => {
             const { session } = ctx;
 
-            await clerkClient.users.updateUser(session.userId, {
+            const playerOne = await clerkClient.users.getUser(session.userId);
+            const playerTwo = await clerkClient.users.getUser(input.playerTwoId);
+
+            const { playerOneDiff, playerTwoDiff } = calculateEloDiff(
+                (playerOne.publicMetadata.elo as number) || 1000,
+                (playerTwo.publicMetadata.elo as number) || 1000,
+                input.playerOneScore,
+                input.playerTwoScore
+            );
+
+            await clerkClient.users.updateUser(playerOne.id, {
                 publicMetadata: {
-                    elo: 1500,
+                    elo: ((playerOne.publicMetadata.elo as number) || 1000) + playerOneDiff,
+                },
+            });
+            await clerkClient.users.updateUser(playerTwo.id, {
+                publicMetadata: {
+                    elo: ((playerTwo.publicMetadata.elo as number) || 1000) + playerTwoDiff,
                 },
             });
 
@@ -69,8 +85,8 @@ export const matchRouter = createTRPCRouter({
             const match = await ctx.prisma.match.create({
                 data: {
                     playerOneId: session.userId,
-                    playerOneElo: 10,
-                    playerTwoElo: -20,
+                    playerOneDiff,
+                    playerTwoDiff,
                     ...input,
                 },
             });

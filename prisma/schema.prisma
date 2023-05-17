@@ -18,8 +18,8 @@ model Match {
     playerOneScore Int
     playerTwoScore Int
 
-    playerOneElo Int
-    playerTwoElo Int
+    playerOneDiff Int
+    playerTwoDiff Int
 
     ranked Boolean @default(false)
 

@@ -138,8 +138,8 @@ const MatchCard = ({ match, playerOne, playerTwo }: { match: Match; playerOne: U
                 <ul className="grid grid-cols-10 gap-3">
                     <li className="col-span-1 flex items-center font-bold">
                         {!match.ranked && <p>-</p>}
-                        {match.playerOneElo >= 0 && <p className="text-green-500">+{match.playerOneElo}</p>}
-                        {match.playerOneElo < 0 && <p className="text-red-500">{match.playerOneElo}</p>}
+                        {match.playerOneDiff >= 0 && <p className="text-green-500">+{match.playerOneDiff}</p>}
+                        {match.playerOneDiff < 0 && <p className="text-red-500">{match.playerOneDiff}</p>}
                     </li>
                     <li className="justify-left col-span-3 flex flex-row items-center gap-3">
                         <Avatar className="h-8 w-8">
@@ -164,8 +164,8 @@ const MatchCard = ({ match, playerOne, playerTwo }: { match: Match; playerOne: U
                     </li>
                     <li className="col-span-1 flex items-center font-bold">
                         {!match.ranked && <p>-</p>}
-                        {match.playerTwoElo >= 0 && <p className="text-green-500">+{match.playerTwoElo}</p>}
-                        {match.playerTwoElo < 0 && <p className="text-red-500">{match.playerTwoElo}</p>}
+                        {match.playerTwoDiff >= 0 && <p className="text-green-500">+{match.playerTwoDiff}</p>}
+                        {match.playerTwoDiff < 0 && <p className="text-red-500">{match.playerTwoDiff}</p>}
                     </li>
                     <li className="col-span-1 flex flex-row items-center justify-center">
                         <p>{match.ranked ? "Ranked" : "Casual"}</p>
