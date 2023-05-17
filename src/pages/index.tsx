@@ -11,6 +11,8 @@ import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, Tabl
 import { Label } from "~/components/ui/label";
 import { Switch } from "~/components/ui/switch";
 import { Card, CardContent } from "~/components/ui/card";
+import { type User } from "@clerk/nextjs/dist/api";
+import { type Match } from "@prisma/client";
 
 const Home: NextPage = () => {
     const user = useUser();
@@ -24,7 +26,7 @@ const Home: NextPage = () => {
             </Head>
             <main className="md:w-max-screen-lg bg-mauve-300 flex flex-col items-center md:mx-auto md:my-0">
                 {user.isSignedIn && <AddMatch />}
-                <div className="grid-cols-2 md:grid">
+                <div className="grid-cols-2 xl:grid">
                     <MatchList />
                     <LeaderBoard />
                 </div>
@@ -42,6 +44,7 @@ const AddMatch = () => {
     const [opponent, setOpponent] = useState("");
     const [playerOneScore, setPlayerOneScore] = useState<number>();
     const [playerTwoScore, setPlayerTwoScore] = useState<number>();
+    const [ranked, setRanked] = useState(false);
 
     if (!isSignedIn) return null;
 
@@ -52,6 +55,7 @@ const AddMatch = () => {
             playerTwoId: opponent,
             playerOneScore,
             playerTwoScore,
+            ranked,
         });
     };
 
@@ -98,7 +102,7 @@ const AddMatch = () => {
                     </SelectContent>
                 </Select>
                 <div className="flex items-center space-x-2">
-                    <Switch id="ranked" />
+                    <Switch id="ranked" onCheckedChange={(checked) => setRanked(checked)} />
                     <Label htmlFor="ranked">Ranked</Label>
                 </div>
                 <Button type="submit" value="Submit">
@@ -120,34 +124,44 @@ const MatchList = () => {
                     players: { playerOne, playerTwo },
                 } = matchWithPlayers;
 
-                return (
-                    <Card key={match.id} className="bg-background">
-                        <CardContent className="p-4">
-                            <ul className="flex flex-row items-center justify-center gap-5">
-                                <li className="flex flex-row items-center gap-3">
-                                    <Avatar className="h-8 w-8">
-                                        <AvatarImage src={playerOne.profileImageUrl} alt={playerOne.firstName ?? ""} />
-                                    </Avatar>
-                                    <p>
-                                        {playerOne.firstName} {playerOne.lastName}
-                                    </p>
-                                    <p>{match.playerOneScore}</p>
-                                </li>
-                                <li className="flex flex-row items-center gap-3">
-                                    <p>{match.playerTwoScore}</p>
-                                    <p>
-                                        {playerTwo.firstName} {playerTwo.lastName}
-                                    </p>
-                                    <Avatar className="h-8 w-8">
-                                        <AvatarImage src={playerTwo.profileImageUrl} alt={playerTwo.firstName ?? ""} />
-                                    </Avatar>
-                                </li>
-                            </ul>
-                        </CardContent>
-                    </Card>
-                );
+                return <MatchCard key={match.id} match={match} playerOne={playerOne} playerTwo={playerTwo} />;
             })}
         </section>
+    );
+};
+
+const MatchCard = ({ match, playerOne, playerTwo }: { match: Match; playerOne: User; playerTwo: User }) => {
+    return (
+        <Card className="bg-background">
+            <CardContent className="p-4">
+                <ul className="grid grid-cols-12 gap-3">
+                    <li className="justify-left col-span-4 flex flex-row items-center gap-3">
+                        <Avatar className="h-8 w-8">
+                            <AvatarImage src={playerOne.profileImageUrl} alt={playerOne.firstName ?? ""} />
+                        </Avatar>
+                        <p>
+                            {playerOne.firstName} {playerOne.lastName}
+                        </p>
+                        <p>{match.playerOneScore}</p>
+                    </li>
+                    <li className="col-span-1 flex justify-center">
+                        <p>vs</p>
+                    </li>
+                    <li className="justify-left col-span-4 flex flex-row items-center gap-3">
+                        <p>{match.playerTwoScore}</p>
+                        <p>
+                            {playerTwo.firstName} {playerTwo.lastName}
+                        </p>
+                        <Avatar className="h-8 w-8">
+                            <AvatarImage src={playerTwo.profileImageUrl} alt={playerTwo.firstName ?? ""} />
+                        </Avatar>
+                    </li>
+                    <li className="col-span-3 flex flex-row items-center justify-center">
+                        <p>{match.ranked ? "Ranked" : "Casual"}</p>
+                    </li>
+                </ul>
+            </CardContent>
+        </Card>
     );
 };
 
