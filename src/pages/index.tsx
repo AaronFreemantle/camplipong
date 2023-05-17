@@ -134,8 +134,12 @@ const MatchCard = ({ match, playerOne, playerTwo }: { match: Match; playerOne: U
     return (
         <Card className="bg-background">
             <CardContent className="p-4">
-                <ul className="grid grid-cols-12 gap-3">
-                    <li className="justify-left col-span-4 flex flex-row items-center gap-3">
+                <ul className="grid grid-cols-10 gap-3">
+                    <li className="col-span-1 font-bold">
+                        <p className="text-green-500">+10</p>
+                        <p className="text-red-500">-10</p>
+                    </li>
+                    <li className="justify-left col-span-3 flex flex-row items-center gap-3">
                         <Avatar className="h-8 w-8">
                             <AvatarImage src={playerOne.profileImageUrl} alt={playerOne.firstName ?? ""} />
                         </Avatar>
@@ -147,7 +151,7 @@ const MatchCard = ({ match, playerOne, playerTwo }: { match: Match; playerOne: U
                     <li className="col-span-1 flex justify-center">
                         <p>vs</p>
                     </li>
-                    <li className="justify-left col-span-4 flex flex-row items-center gap-3">
+                    <li className="justify-left col-span-3 flex flex-row items-center gap-3">
                         <p>{match.playerTwoScore}</p>
                         <p>
                             {playerTwo.firstName} {playerTwo.lastName}
@@ -156,7 +160,10 @@ const MatchCard = ({ match, playerOne, playerTwo }: { match: Match; playerOne: U
                             <AvatarImage src={playerTwo.profileImageUrl} alt={playerTwo.firstName ?? ""} />
                         </Avatar>
                     </li>
-                    <li className="col-span-3 flex flex-row items-center justify-center">
+                    <li className="col-span-1">
+                        <p>-20</p>
+                    </li>
+                    <li className="col-span-1 flex flex-row items-center justify-center">
                         <p>{match.ranked ? "Ranked" : "Casual"}</p>
                     </li>
                 </ul>
