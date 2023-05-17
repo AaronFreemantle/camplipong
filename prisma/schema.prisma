@@ -18,6 +18,9 @@ model Match {
     playerOneScore Int
     playerTwoScore Int
 
+    playerOneElo Int
+    playerTwoElo Int
+
     ranked Boolean @default(false)
 
     @@index([playerOneId])

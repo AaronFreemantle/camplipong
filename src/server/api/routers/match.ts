@@ -59,10 +59,18 @@ export const matchRouter = createTRPCRouter({
         .mutation(async ({ ctx, input }) => {
             const { session } = ctx;
 
+            await clerkClient.users.updateUser(session.userId, {
+                publicMetadata: {
+                    elo: 1500,
+                },
+            });
+
             console.log("Match created: ", input);
             const match = await ctx.prisma.match.create({
                 data: {
                     playerOneId: session.userId,
+                    playerOneElo: 10,
+                    playerTwoElo: -20,
                     ...input,
                 },
             });

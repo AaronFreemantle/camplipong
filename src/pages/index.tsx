@@ -13,6 +13,7 @@ import { Switch } from "~/components/ui/switch";
 import { Card, CardContent } from "~/components/ui/card";
 import { type User } from "@clerk/nextjs/dist/api";
 import { type Match } from "@prisma/client";
+import { clerkClient } from "@clerk/nextjs/server";
 
 const Home: NextPage = () => {
     const user = useUser();
@@ -76,7 +77,7 @@ const AddMatch = () => {
                     <Label htmlFor="opponentScore">{`Opponent's Score`}</Label>
                     <Input
                         id="opponentScore"
-                        type="text"
+                        type="number"
                         inputMode="numeric"
                         onChange={(e) => setPlayerTwoScore(+e.target.value)}
                     />
@@ -135,9 +136,10 @@ const MatchCard = ({ match, playerOne, playerTwo }: { match: Match; playerOne: U
         <Card className="bg-background">
             <CardContent className="p-4">
                 <ul className="grid grid-cols-10 gap-3">
-                    <li className="col-span-1 font-bold">
-                        <p className="text-green-500">+10</p>
-                        <p className="text-red-500">-10</p>
+                    <li className="col-span-1 flex items-center font-bold">
+                        {!match.ranked && <p>-</p>}
+                        {match.playerOneElo >= 0 && <p className="text-green-500">+{match.playerOneElo}</p>}
+                        {match.playerOneElo < 0 && <p className="text-red-500">{match.playerOneElo}</p>}
                     </li>
                     <li className="justify-left col-span-3 flex flex-row items-center gap-3">
                         <Avatar className="h-8 w-8">
@@ -160,8 +162,10 @@ const MatchCard = ({ match, playerOne, playerTwo }: { match: Match; playerOne: U
                             <AvatarImage src={playerTwo.profileImageUrl} alt={playerTwo.firstName ?? ""} />
                         </Avatar>
                     </li>
-                    <li className="col-span-1">
-                        <p>-20</p>
+                    <li className="col-span-1 flex items-center font-bold">
+                        {!match.ranked && <p>-</p>}
+                        {match.playerTwoElo >= 0 && <p className="text-green-500">+{match.playerTwoElo}</p>}
+                        {match.playerTwoElo < 0 && <p className="text-red-500">{match.playerTwoElo}</p>}
                     </li>
                     <li className="col-span-1 flex flex-row items-center justify-center">
                         <p>{match.ranked ? "Ranked" : "Casual"}</p>
