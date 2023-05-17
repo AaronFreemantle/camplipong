@@ -13,7 +13,6 @@ import { Switch } from "~/components/ui/switch";
 import { Card, CardContent } from "~/components/ui/card";
 import { type User } from "@clerk/nextjs/dist/api";
 import { type Match } from "@prisma/client";
-import { clerkClient } from "@clerk/nextjs/server";
 
 const Home: NextPage = () => {
     const user = useUser();
@@ -40,7 +39,12 @@ const AddMatch = () => {
     const { user: currentUser, isSignedIn } = useUser();
 
     const { data: users } = api.user.getAll.useQuery();
-    const { mutate: createMatch } = api.match.create.useMutation();
+    const ctx = api.useContext();
+    const { mutate: createMatch } = api.match.create.useMutation({
+        onSuccess: () => {
+            void ctx.match.getAll.invalidate();
+        },
+    });
 
     const [opponent, setOpponent] = useState("");
     const [playerOneScore, setPlayerOneScore] = useState<number>();
