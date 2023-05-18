@@ -1,9 +1,8 @@
-import { useUser, SignInButton, SignOutButton, UserButton } from "@clerk/nextjs";
+import { useUser, SignInButton, UserButton } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import { ThemeToggle } from "./ThemeToggle";
 import { Icons } from "./Icons";
-import theme from "tailwindcss/defaultTheme";
 import { Button } from "./ui/button";
 
 export default function Navbar() {
@@ -16,7 +15,7 @@ export default function Navbar() {
                     <Image src="/favicon.ico" alt="Camplipong" width="40" height="40" />
                     <Link href="/">
                         <h1 className="bg-gradient-to-r from-blue-400 to-pink-400 bg-clip-text text-2xl font-bold text-transparent">
-                            Camplipong<sup className="text-gray-700">beta</sup>
+                            Camplipong<sup className="text-foreground">beta</sup>
                         </h1>
                     </Link>
                 </li>

@@ -47,7 +47,7 @@ const MatchRow = ({ match, playerOne, playerTwo }: { match: Match; playerOne: Us
                 {match.playerOneDiff >= 0 && <p className="text-green-500">+{match.playerOneDiff}</p>}
                 {match.playerOneDiff < 0 && <p className="text-red-500">{match.playerOneDiff}</p>}
             </TableCell>
-            <TableCell className="flex items-center gap-2 p-1">
+            <TableCell className="flex items-center justify-start gap-2 p-0">
                 <Avatar className="h-8 w-8">
                     <AvatarImage src={playerOne.profileImageUrl} alt={playerOne.firstName ?? ""} />
                 </Avatar>
@@ -64,7 +64,7 @@ const MatchRow = ({ match, playerOne, playerTwo }: { match: Match; playerOne: Us
             <TableCell className="p-1 text-center">
                 <p>{match.playerTwoScore}</p>
             </TableCell>
-            <TableCell className="flex items-center gap-2 p-1">
+            <TableCell className="flex items-center justify-end gap-2 p-0">
                 <p className="hidden sm:block">
                     {playerTwo.firstName} {playerTwo.lastName}
                 </p>
