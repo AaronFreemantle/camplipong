@@ -1,6 +1,10 @@
 import { useUser, SignInButton, SignOutButton, UserButton } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
+import { ThemeToggle } from "./ThemeToggle";
+import { Icons } from "./Icons";
+import theme from "tailwindcss/defaultTheme";
+import { Button } from "./ui/button";
 
 export default function Navbar() {
     const { user, isSignedIn } = useUser();
@@ -15,6 +19,19 @@ export default function Navbar() {
                             Camplipong<sup className="text-gray-700">beta</sup>
                         </h1>
                     </Link>
+                </li>
+                <li>
+                    <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => (window.location.href = "https://github.com/AaronFreemantle/camplipong")}
+                    >
+                        <Icons.gitHub className="h-5 w-5" />
+                        <span className="sr-only">Toggle theme</span>
+                    </Button>
+                </li>
+                <li>
+                    <ThemeToggle />
                 </li>
                 <li>{!isSignedIn ? <SignInButton /> : <p>{user.fullName}</p>}</li>
                 <UserButton />

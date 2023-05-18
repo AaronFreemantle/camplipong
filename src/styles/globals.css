@@ -4,32 +4,32 @@
 
 @layer base {
     :root {
-        --ctp-latte-base-hsl: hsl(220, 23%, 95%);
-        --ctp-latte-blue-hsl: hsl(220, 91%, 54%);
-        --ctp-latte-crust-hsl: hsl(220, 21%, 89%);
-        --ctp-latte-flamingo-hsl: hsl(0, 60%, 67%);
-        --ctp-latte-green-hsl: hsl(109, 58%, 40%);
-        --ctp-latte-lavender-hsl: hsl(231, 97%, 72%);
-        --ctp-latte-mantle-hsl: hsl(220, 22%, 92%);
-        --ctp-latte-maroon-hsl: hsl(355, 76%, 59%);
-        --ctp-latte-mauve-hsl: hsl(266, 85%, 58%);
-        --ctp-latte-overlay0-hsl: hsl(228, 11%, 65%);
-        --ctp-latte-overlay1-hsl: hsl(231, 10%, 59%);
-        --ctp-latte-overlay2-hsl: hsl(232, 10%, 53%);
-        --ctp-latte-peach-hsl: hsl(22, 99%, 52%);
-        --ctp-latte-pink-hsl: hsl(316, 73%, 69%);
-        --ctp-latte-red-hsl: hsl(347, 87%, 44%);
-        --ctp-latte-rosewater-hsl: hsl(11, 59%, 67%);
-        --ctp-latte-sapphire-hsl: hsl(189, 70%, 42%);
-        --ctp-latte-sky-hsl: hsl(197, 97%, 46%);
-        --ctp-latte-subtext0-hsl: hsl(233, 10%, 47%);
-        --ctp-latte-subtext1-hsl: hsl(233, 13%, 41%);
-        --ctp-latte-surface0-hsl: hsl(223, 16%, 83%);
-        --ctp-latte-surface1-hsl: hsl(225, 14%, 77%);
-        --ctp-latte-surface2-hsl: hsl(227, 12%, 71%);
-        --ctp-latte-teal-hsl: hsl(183, 74%, 35%);
-        --ctp-latte-text-hsl: hsl(234, 16%, 35%);
-        --ctp-latte-yellow-hsl: hsl(35, 77%, 49%);
+        --ctp-latte-base-hsl: 220, 23%, 95%;
+        --ctp-latte-blue-hsl: 220, 91%, 54%;
+        --ctp-latte-crust-hsl: 220, 21%, 89%;
+        --ctp-latte-flamingo-hsl: 0, 60%, 67%;
+        --ctp-latte-green-hsl: 109, 58%, 40%;
+        --ctp-latte-lavender-hsl: 231, 97%, 72%;
+        --ctp-latte-mantle-hsl: 220, 22%, 92%;
+        --ctp-latte-maroon-hsl: 355, 76%, 59%;
+        --ctp-latte-mauve-hsl: 266, 85%, 58%;
+        --ctp-latte-overlay0-hsl: 228, 11%, 65%;
+        --ctp-latte-overlay1-hsl: 231, 10%, 59%;
+        --ctp-latte-overlay2-hsl: 232, 10%, 53%;
+        --ctp-latte-peach-hsl: 22, 99%, 52%;
+        --ctp-latte-pink-hsl: 316, 73%, 69%;
+        --ctp-latte-red-hsl: 347, 87%, 44%;
+        --ctp-latte-rosewater-hsl: 11, 59%, 67%;
+        --ctp-latte-sapphire-hsl: 189, 70%, 42%;
+        --ctp-latte-sky-hsl: 197, 97%, 46%;
+        --ctp-latte-subtext0-hsl: 233, 10%, 47%;
+        --ctp-latte-subtext1-hsl: 233, 13%, 41%;
+        --ctp-latte-surface0-hsl: 223, 16%, 83%;
+        --ctp-latte-surface1-hsl: 225, 14%, 77%;
+        --ctp-latte-surface2-hsl: 227, 12%, 71%;
+        --ctp-latte-teal-hsl: 183, 74%, 35%;
+        --ctp-latte-text-hsl: 234, 16%, 35%;
+        --ctp-latte-yellow-hsl: 35, 77%, 49%;
 
         --background: 0 0% 100%;
         --foreground: 222.2 47.4% 11.2%;
@@ -64,32 +64,32 @@
     }
 
     .dark {
-        --ctp-frappe-base-hsl: hsl(229, 19%, 23%);
-        --ctp-frappe-blue-hsl: hsl(222, 74%, 74%);
-        --ctp-frappe-crust-hsl: hsl(229, 20%, 17%);
-        --ctp-frappe-flamingo-hsl: hsl(0, 59%, 84%);
-        --ctp-frappe-green-hsl: hsl(96, 44%, 68%);
-        --ctp-frappe-lavender-hsl: hsl(239, 66%, 84%);
-        --ctp-frappe-mantle-hsl: hsl(231, 19%, 20%);
-        --ctp-frappe-maroon-hsl: hsl(358, 66%, 76%);
-        --ctp-frappe-mauve-hsl: hsl(277, 59%, 76%);
-        --ctp-frappe-overlay0-hsl: hsl(229, 13%, 52%);
-        --ctp-frappe-overlay1-hsl: hsl(227, 17%, 58%);
-        --ctp-frappe-overlay2-hsl: hsl(228, 22%, 66%);
-        --ctp-frappe-peach-hsl: hsl(20, 79%, 70%);
-        --ctp-frappe-pink-hsl: hsl(316, 73%, 84%);
-        --ctp-frappe-red-hsl: hsl(359, 68%, 71%);
-        --ctp-frappe-rosewater-hsl: hsl(10, 57%, 88%);
-        --ctp-frappe-sapphire-hsl: hsl(199, 55%, 69%);
-        --ctp-frappe-sky-hsl: hsl(189, 48%, 73%);
-        --ctp-frappe-subtext0-hsl: hsl(228, 29%, 73%);
-        --ctp-frappe-subtext1-hsl: hsl(227, 44%, 80%);
-        --ctp-frappe-surface0-hsl: hsl(230, 16%, 30%);
-        --ctp-frappe-surface1-hsl: hsl(227, 15%, 37%);
-        --ctp-frappe-surface2-hsl: hsl(228, 13%, 44%);
-        --ctp-frappe-teal-hsl: hsl(172, 39%, 65%);
-        --ctp-frappe-text-hsl: hsl(227, 70%, 87%);
-        --ctp-frappe-yellow-hsl: hsl(40, 62%, 73%);
+        --ctp-frappe-base-hsl: 229, 19%, 23%;
+        --ctp-frappe-blue-hsl: 222, 74%, 74%;
+        --ctp-frappe-crust-hsl: 229, 20%, 17%;
+        --ctp-frappe-flamingo-hsl: 0, 59%, 84%;
+        --ctp-frappe-green-hsl: 96, 44%, 68%;
+        --ctp-frappe-lavender-hsl: 239, 66%, 84%;
+        --ctp-frappe-mantle-hsl: 231, 19%, 20%;
+        --ctp-frappe-maroon-hsl: 358, 66%, 76%;
+        --ctp-frappe-mauve-hsl: 277, 59%, 76%;
+        --ctp-frappe-overlay0-hsl: 229, 13%, 52%;
+        --ctp-frappe-overlay1-hsl: 227, 17%, 58%;
+        --ctp-frappe-overlay2-hsl: 228, 22%, 66%;
+        --ctp-frappe-peach-hsl: 20, 79%, 70%;
+        --ctp-frappe-pink-hsl: 316, 73%, 84%;
+        --ctp-frappe-red-hsl: 359, 68%, 71%;
+        --ctp-frappe-rosewater-hsl: 10, 57%, 88%;
+        --ctp-frappe-sapphire-hsl: 199, 55%, 69%;
+        --ctp-frappe-sky-hsl: 189, 48%, 73%;
+        --ctp-frappe-subtext0-hsl: 228, 29%, 73%;
+        --ctp-frappe-subtext1-hsl: 227, 44%, 80%;
+        --ctp-frappe-surface0-hsl: 230, 16%, 30%;
+        --ctp-frappe-surface1-hsl: 227, 15%, 37%;
+        --ctp-frappe-surface2-hsl: 228, 13%, 44%;
+        --ctp-frappe-teal-hsl: 172, 39%, 65%;
+        --ctp-frappe-text-hsl: 227, 70%, 87%;
+        --ctp-frappe-yellow-hsl: 40, 62%, 73%;
 
         --background: 224 71% 4%;
         --foreground: 213 31% 91%;
@@ -121,5 +121,33 @@
         --ring: 216 34% 17%;
 
         --radius: 0.5rem;
+    }
+}
+
+@layer base {
+    * {
+        @apply border-border;
+    }
+    body {
+        @apply bg-background text-foreground;
+        font-feature-settings: "rlig" 1, "calt" 1;
+    }
+}
+
+@layer utilities {
+    .step {
+        counter-increment: step;
+    }
+
+    .step:before {
+        @apply absolute inline-flex h-8 w-8 items-center justify-center rounded-full bg-muted text-center -indent-px text-base font-medium;
+        @apply ml-[-41px];
+        content: counter(step);
+    }
+}
+
+@media (max-width: 640px) {
+    .container {
+        @apply px-4;
     }
 }
