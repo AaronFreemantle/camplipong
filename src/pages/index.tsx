@@ -126,14 +126,14 @@ const MatchList = () => {
             <Table>
                 <TableHeader>
                     <TableRow>
-                        <TableHead>Rating +/-</TableHead>
-                        <TableHead>Player 1</TableHead>
-                        <TableHead>P1 Score</TableHead>
-                        <TableHead></TableHead>
-                        <TableHead>P2 Score</TableHead>
-                        <TableHead>Player 2</TableHead>
-                        <TableHead>Rating +/-</TableHead>
-                        <TableHead>Ranked</TableHead>
+                        <TableHead className="p-1 text-center">Rating +/-</TableHead>
+                        <TableHead className="p-1 text-center">Player 1</TableHead>
+                        <TableHead className="p-1 text-center">P1 Score</TableHead>
+                        <TableHead className="p-0 text-center"></TableHead>
+                        <TableHead className="p-1 text-center">P2 Score</TableHead>
+                        <TableHead className="p-1 text-center">Player 2</TableHead>
+                        <TableHead className="p-1 text-center">Rating +/-</TableHead>
+                        <TableHead className="p-1 text-center">Ranked</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -154,42 +154,42 @@ const MatchList = () => {
 const MatchRow = ({ match, playerOne, playerTwo }: { match: Match; playerOne: User; playerTwo: User }) => {
     return (
         <TableRow className="bg-background">
-            <TableCell className="text-center">
+            <TableCell className="p-1 text-center">
                 {!match.ranked && <p>-</p>}
                 {match.playerOneDiff >= 0 && <p className="text-green-500">+{match.playerOneDiff}</p>}
                 {match.playerOneDiff < 0 && <p className="text-red-500">{match.playerOneDiff}</p>}
             </TableCell>
-            <TableCell className="flex items-center gap-2">
+            <TableCell className="flex items-center gap-2 p-1">
                 <Avatar className="h-8 w-8">
                     <AvatarImage src={playerOne.profileImageUrl} alt={playerOne.firstName ?? ""} />
                 </Avatar>
-                <p>
+                <p className="hidden sm:block">
                     {playerOne.firstName} {playerOne.lastName}
                 </p>
             </TableCell>
-            <TableCell className="text-center">
+            <TableCell className="p-1 text-center">
                 <p>{match.playerOneScore}</p>
             </TableCell>
-            <TableCell className="">
+            <TableCell className="p-0">
                 <p>vs</p>
             </TableCell>
-            <TableCell className="text-center">
+            <TableCell className="p-1 text-center">
                 <p>{match.playerTwoScore}</p>
             </TableCell>
-            <TableCell className="flex items-center gap-2">
-                <p>
+            <TableCell className="flex items-center gap-2 p-1">
+                <p className="hidden sm:block">
                     {playerTwo.firstName} {playerTwo.lastName}
                 </p>
                 <Avatar className="h-8 w-8">
                     <AvatarImage src={playerTwo.profileImageUrl} alt={playerTwo.firstName ?? ""} />
                 </Avatar>
             </TableCell>
-            <TableCell className="text-center">
+            <TableCell className="p-1 text-center">
                 {!match.ranked && <p>-</p>}
                 {match.playerTwoDiff >= 0 && <p className="text-green-500">+{match.playerTwoDiff}</p>}
                 {match.playerTwoDiff < 0 && <p className="text-red-500">{match.playerTwoDiff}</p>}
             </TableCell>
-            <TableCell className="">
+            <TableCell className="p-1">
                 <p>{match.ranked ? "Ranked" : "Casual"}</p>
             </TableCell>
         </TableRow>
@@ -223,7 +223,6 @@ const LeaderBoard = () => {
                             return (
                                 <LeaderBoardRow
                                     key={id}
-                                    id={id}
                                     firstName={firstName ?? ""}
                                     lastName={lastName ?? ""}
                                     profileImageUrl={profileImageUrl}
@@ -238,13 +237,11 @@ const LeaderBoard = () => {
 };
 
 const LeaderBoardRow = ({
-    id,
     firstName,
     lastName,
     profileImageUrl,
     elo,
 }: {
-    id: string;
     firstName: string;
     lastName: string;
     profileImageUrl: string;
