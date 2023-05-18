@@ -21,7 +21,7 @@ const Home: NextPage = () => {
         <>
             <Head>
                 <title>Camplipong</title>
-                <meta name="description" content="Camplify Ping Pong LeaderBoard" />
+                <meta name="description" content="dark" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <main className="md:w-max-screen-lg bg-mauve-300 flex flex-col items-center md:mx-auto md:my-0">
@@ -123,69 +123,147 @@ const MatchList = () => {
     return (
         <section className="m-4">
             <h2 className="m-2 flex justify-center text-2xl">Recent Matches</h2>
-            {matchesWithPlayers?.map((matchWithPlayers) => {
-                const {
-                    match,
-                    players: { playerOne, playerTwo },
-                } = matchWithPlayers;
+            <Table>
+                <TableHeader>
+                    <TableRow>
+                        <TableHead>Rating +/-</TableHead>
+                        <TableHead>Player 1</TableHead>
+                        <TableHead>P1 Score</TableHead>
+                        <TableHead></TableHead>
+                        <TableHead>P2 Score</TableHead>
+                        <TableHead>Player 2</TableHead>
+                        <TableHead>Rating +/-</TableHead>
+                        <TableHead>Ranked</TableHead>
+                    </TableRow>
+                </TableHeader>
+                <TableBody>
+                    {matchesWithPlayers?.map((matchWithPlayers) => {
+                        const {
+                            match,
+                            players: { playerOne, playerTwo },
+                        } = matchWithPlayers;
 
-                return <MatchCard key={match.id} match={match} playerOne={playerOne} playerTwo={playerTwo} />;
-            })}
+                        return <MatchRow key={match.id} match={match} playerOne={playerOne} playerTwo={playerTwo} />;
+                    })}
+                </TableBody>
+            </Table>
         </section>
     );
 };
 
-const MatchCard = ({ match, playerOne, playerTwo }: { match: Match; playerOne: User; playerTwo: User }) => {
+const MatchRow = ({ match, playerOne, playerTwo }: { match: Match; playerOne: User; playerTwo: User }) => {
     return (
-        <Card className="bg-background">
-            <CardContent className="p-4">
-                <ul className="grid grid-cols-10 gap-3">
-                    <li className="col-span-1 flex items-center font-bold">
-                        {!match.ranked && <p>-</p>}
-                        {match.playerOneDiff >= 0 && <p className="text-green-500">+{match.playerOneDiff}</p>}
-                        {match.playerOneDiff < 0 && <p className="text-red-500">{match.playerOneDiff}</p>}
-                    </li>
-                    <li className="justify-left col-span-3 flex flex-row items-center gap-3">
-                        <Avatar className="h-8 w-8">
-                            <AvatarImage src={playerOne.profileImageUrl} alt={playerOne.firstName ?? ""} />
-                        </Avatar>
-                        <p>
-                            {playerOne.firstName} {playerOne.lastName}
-                        </p>
-                        <p>{match.playerOneScore}</p>
-                    </li>
-                    <li className="col-span-1 flex justify-center">
-                        <p>vs</p>
-                    </li>
-                    <li className="justify-left col-span-3 flex flex-row items-center gap-3">
-                        <p>{match.playerTwoScore}</p>
-                        <p>
-                            {playerTwo.firstName} {playerTwo.lastName}
-                        </p>
-                        <Avatar className="h-8 w-8">
-                            <AvatarImage src={playerTwo.profileImageUrl} alt={playerTwo.firstName ?? ""} />
-                        </Avatar>
-                    </li>
-                    <li className="col-span-1 flex items-center font-bold">
-                        {!match.ranked && <p>-</p>}
-                        {match.playerTwoDiff >= 0 && <p className="text-green-500">+{match.playerTwoDiff}</p>}
-                        {match.playerTwoDiff < 0 && <p className="text-red-500">{match.playerTwoDiff}</p>}
-                    </li>
-                    <li className="col-span-1 flex flex-row items-center justify-center">
-                        <p>{match.ranked ? "Ranked" : "Casual"}</p>
-                    </li>
-                </ul>
-            </CardContent>
-        </Card>
+        <TableRow className="bg-background">
+            <TableCell className="text-center">
+                {!match.ranked && <p>-</p>}
+                {match.playerOneDiff >= 0 && <p className="text-green-500">+{match.playerOneDiff}</p>}
+                {match.playerOneDiff < 0 && <p className="text-red-500">{match.playerOneDiff}</p>}
+            </TableCell>
+            <TableCell className="flex items-center gap-2">
+                <Avatar className="h-8 w-8">
+                    <AvatarImage src={playerOne.profileImageUrl} alt={playerOne.firstName ?? ""} />
+                </Avatar>
+                <p>
+                    {playerOne.firstName} {playerOne.lastName}
+                </p>
+            </TableCell>
+            <TableCell className="text-center">
+                <p>{match.playerOneScore}</p>
+            </TableCell>
+            <TableCell className="">
+                <p>vs</p>
+            </TableCell>
+            <TableCell className="text-center">
+                <p>{match.playerTwoScore}</p>
+            </TableCell>
+            <TableCell className="flex items-center gap-2">
+                <p>
+                    {playerTwo.firstName} {playerTwo.lastName}
+                </p>
+                <Avatar className="h-8 w-8">
+                    <AvatarImage src={playerTwo.profileImageUrl} alt={playerTwo.firstName ?? ""} />
+                </Avatar>
+            </TableCell>
+            <TableCell className="text-center">
+                {!match.ranked && <p>-</p>}
+                {match.playerTwoDiff >= 0 && <p className="text-green-500">+{match.playerTwoDiff}</p>}
+                {match.playerTwoDiff < 0 && <p className="text-red-500">{match.playerTwoDiff}</p>}
+            </TableCell>
+            <TableCell className="">
+                <p>{match.ranked ? "Ranked" : "Casual"}</p>
+            </TableCell>
+        </TableRow>
     );
 };
 
 const LeaderBoard = () => {
+    const { data: users } = api.user.getAll.useQuery();
     return (
-        <section className="m-2">
-            <h2 className="m-2 flex justify-center text-2xl">Leaderboard</h2>
-            <Table></Table>
+        <section className="m-4">
+            <h2 className="m-2 flex justify-center text-2xl">LeaderBoard</h2>
+            <Table>
+                <TableHeader>
+                    <TableRow>
+                        <TableHead>Player 1</TableHead>
+                        <TableHead className="text-right">Rating</TableHead>
+                    </TableRow>
+                </TableHeader>
+                <TableBody>
+                    {users
+                        ?.sort((a, b) => Number(b.publicMetadata.elo) - Number(a.publicMetadata.elo))
+                        .map((user) => {
+                            const {
+                                id,
+                                firstName,
+                                lastName,
+                                profileImageUrl,
+                                publicMetadata: { elo },
+                            } = user;
+
+                            return (
+                                <LeaderBoardRow
+                                    key={id}
+                                    id={id}
+                                    firstName={firstName ?? ""}
+                                    lastName={lastName ?? ""}
+                                    profileImageUrl={profileImageUrl}
+                                    elo={elo as number}
+                                />
+                            );
+                        })}
+                </TableBody>
+            </Table>
         </section>
+    );
+};
+
+const LeaderBoardRow = ({
+    id,
+    firstName,
+    lastName,
+    profileImageUrl,
+    elo,
+}: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    profileImageUrl: string;
+    elo: number;
+}) => {
+    return (
+        <TableRow className="bg-background">
+            <TableCell className="flex items-center gap-2">
+                <Avatar className="h-8 w-8">
+                    <AvatarImage src={profileImageUrl} alt={firstName ?? ""} />
+                </Avatar>
+                <p>
+                    {firstName} {lastName}
+                </p>
+            </TableCell>
+            <TableCell className="text-right">
+                <p>{elo}</p>
+            </TableCell>
+        </TableRow>
     );
 };
 export default Home;
