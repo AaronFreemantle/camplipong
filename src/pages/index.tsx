@@ -42,6 +42,7 @@ const AddMatch = () => {
     const { mutate: createMatch } = api.match.create.useMutation({
         onSuccess: () => {
             void ctx.match.getAll.invalidate();
+            void ctx.user.getAll.invalidate();
         },
     });
 
