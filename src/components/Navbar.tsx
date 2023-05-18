@@ -16,9 +16,6 @@ export default function Navbar() {
                         </h1>
                     </Link>
                 </li>
-                <li className="px-10">
-                    <Link href="/faq">FAQ</Link>
-                </li>
                 <li>{!isSignedIn ? <SignInButton /> : <p>{user.fullName}</p>}</li>
                 <UserButton />
             </ul>
