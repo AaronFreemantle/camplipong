@@ -7,10 +7,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "~
 import { api } from "~/utils/api";
 import { Avatar, AvatarImage } from "~/components/ui/avatar";
 import { Button } from "~/components/ui/button";
-import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "~/components/ui/table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "~/components/ui/table";
 import { Label } from "~/components/ui/label";
 import { Switch } from "~/components/ui/switch";
-import { Card, CardContent } from "~/components/ui/card";
 import { type User } from "@clerk/nextjs/dist/api";
 import { type Match } from "@prisma/client";
 
@@ -21,7 +20,7 @@ const Home: NextPage = () => {
         <>
             <Head>
                 <title>Camplipong</title>
-                <meta name="description" content="dark" />
+                <meta name="description" content="Camplify Ping Pong Leaderboard" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <main className="md:w-max-screen-lg bg-mauve-300 flex flex-col items-center md:mx-auto md:my-0">
