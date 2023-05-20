@@ -15,7 +15,7 @@ const Home: NextPage = () => {
                 <meta name="description" content="Camplify Ping Pong Leaderboard" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <main className="md:w-max-screen-lg bg-mauve-300 flex flex-col items-center md:mx-auto md:my-0">
+            <main>
                 {user.isSignedIn && <AddMatch />}
                 <div className="grid-cols-2 xl:grid">
                     <MatchList />

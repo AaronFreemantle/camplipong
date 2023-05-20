@@ -7,7 +7,7 @@ import { type Match } from "@prisma/client";
 const MatchList = () => {
     const { data: matchesWithPlayers } = api.match.getAll.useQuery();
     return (
-        <section className="m-4">
+        <section className="width-full m-4">
             <h2 className="m-2 flex justify-center text-2xl">Recent Matches</h2>
             <Table>
                 <TableHeader>
