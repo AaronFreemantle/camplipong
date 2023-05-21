@@ -14,7 +14,7 @@ export default function Navbar() {
                 <li className="flex basis-full items-center justify-center gap-2 md:mr-auto md:basis-auto md:text-left">
                     <Image src="/favicon.ico" alt="Camplipong" width="40" height="40" />
                     <Link href="/">
-                        <h1 className="bg-gradient-to-r from-blue-400 to-pink-400 bg-clip-text text-2xl font-bold text-transparent">
+                        <h1 className="bg-gradient-to-r from-ctp-sapphire to-ctp-pink bg-clip-text text-2xl font-bold text-transparent">
                             Camplipong<sup className="text-foreground">beta</sup>
                         </h1>
                     </Link>

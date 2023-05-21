@@ -15,13 +15,13 @@ const Home: NextPage = () => {
                 <meta name="description" content="Camplify Ping Pong Leaderboard" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <main>
+            <div>
                 {user.isSignedIn && <AddMatch />}
                 <div className="grid-cols-2 xl:grid">
                     <MatchList />
                     <Leaderboard />
                 </div>
-            </main>
+            </div>
         </>
     );
 };

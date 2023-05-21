@@ -6,7 +6,7 @@ const Leaderboard = () => {
     const { data: users } = api.user.getAllWithMatches.useQuery();
     return (
         <section className="m-4">
-            <h2 className="m-2 flex justify-center text-2xl">LeaderBoard</h2>
+            <h2 className="m-2 flex justify-center text-2xl">Leaderboard</h2>
             <Table>
                 <TableHeader>
                     <TableRow>
@@ -71,7 +71,7 @@ const LeaderboardRow = ({
     elo: number;
 }) => {
     return (
-        <TableRow className="bg-background">
+        <TableRow>
             <TableCell className="flex items-center gap-2">
                 <Avatar className="h-8 w-8">
                     <AvatarImage src={profileImageUrl} alt={firstName ?? ""} />
