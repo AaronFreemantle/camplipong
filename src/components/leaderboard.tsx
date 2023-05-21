@@ -19,7 +19,7 @@ const Leaderboard = () => {
                 </TableHeader>
                 <TableBody>
                     {users
-                        ?.sort((a, b) => Number(b.publicMetadata.elo) - Number(a.publicMetadata.elo))
+                        ?.sort((a, b) => Number(b.publicMetadata.elo ?? 0) - Number(a.publicMetadata.elo ?? 0))
                         .map((user) => {
                             const {
                                 id,
