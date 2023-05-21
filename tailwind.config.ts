@@ -14,38 +14,71 @@ export default {
         },
         extend: {
             colors: {
-                border: "hsl(var(--border))",
-                input: "hsl(var(--input))",
-                ring: "hsl(var(--ring))",
-                background: "hsl(var(--background))",
-                foreground: "hsl(var(--foreground))",
+                border: "hsl(var(--surface1))",
+                input: "hsl(var(--surface1))",
+                ring: "hsl(var(--overlay2))",
+                background: "hsl(var(--base))",
+                foreground: "hsl(var(--maintext))",
                 primary: {
-                    DEFAULT: "hsl(var(--primary))",
-                    foreground: "hsl(var(--primary-foreground))",
+                    DEFAULT: "hsl(var(--maintext))",
+                    foreground: "hsl(var(--surface2))",
                 },
                 secondary: {
-                    DEFAULT: "hsl(var(--secondary))",
-                    foreground: "hsl(var(--secondary-foreground))",
+                    DEFAULT: "hsl(var(--crust))",
+                    foreground: "hsl(var(--overlay2))",
                 },
                 destructive: {
-                    DEFAULT: "hsl(var(--destructive))",
-                    foreground: "hsl(var(--destructive-foreground))",
+                    DEFAULT: "hsl(var(--red))",
+                    foreground: "hsl(var(--rosewater))",
                 },
                 muted: {
-                    DEFAULT: "hsl(var(--muted))",
-                    foreground: "hsl(var(--muted-foreground))",
+                    DEFAULT: "hsl(var(--overlay1))",
+                    foreground: "hsl(var(--subtext0)",
                 },
                 accent: {
-                    DEFAULT: "hsl(var(--accent))",
-                    foreground: "hsl(var(--accent-foreground))",
+                    DEFAULT: "hsl(var(--surface1))",
+                    foreground: "hsl(var(--pink))",
                 },
                 popover: {
                     DEFAULT: "hsl(var(--popover))",
                     foreground: "hsl(var(--popover-foreground))",
                 },
                 card: {
-                    DEFAULT: "hsl(var(--card))",
-                    foreground: "hsl(var(--card-foreground))",
+                    DEFAULT: "hsl(var(--mantle))",
+                    foreground: "hsl(var(--maintext))",
+                },
+
+                base: "hsl(var(--base))",
+                crust: "hsl(var(--crust))",
+                mantle: "hsl(var(--mantle))",
+
+                surface0: "hsl(var(--surface0))",
+                surface1: "hsl(var(--surface1))",
+                surface2: "hsl(var(--surface2))",
+
+                overlay0: "hsl(var(--overlay0))",
+                overlay1: "hsl(var(--overlay1))",
+                overlay2: "hsl(var(--overlay2))",
+
+                maintext: "hsl(var(--maintext))",
+                subtext0: "hsl(var(--subtext0))",
+                subtext1: "hsl(var(--subtext1))",
+
+                ctp: {
+                    rosewater: "hsl(var(--rosewater))",
+                    flamingo: "hsl(var(--flamingo))",
+                    pink: "hsl(var(--pink))",
+                    mauve: "hsl(var(--mauve))",
+                    red: "hsl(var(--red))",
+                    maroon: "hsl(var(--maroon))",
+                    peach: "hsl(var(--peach))",
+                    yellow: "hsl(var(--yellow))",
+                    green: "hsl(var(--green))",
+                    teal: "hsl(var(--teal))",
+                    sky: "hsl(var(--sky))",
+                    sapphire: "hsl(var(--sapphire))",
+                    blue: "hsl(var(--blue))",
+                    lavender: "hsl(var(--lavender))",
                 },
             },
             borderRadius: {

@@ -31,7 +31,7 @@ const AddMatch = () => {
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
-        mode: "onChange",
+        mode: "onTouched",
     });
 
     if (!isSignedIn) return null;
@@ -112,10 +112,10 @@ const AddMatch = () => {
                         control={form.control}
                         name="ranked"
                         render={({ field }) => (
-                            <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
+                            <FormItem className="flex flex-row items-center gap-2 rounded-lg border p-4">
                                 <div className="space-y-0.5">
-                                    <FormLabel className="text-base">Ranked</FormLabel>
-                                    <FormDescription>Count match towards match rating.</FormDescription>
+                                    <FormLabel>Ranked</FormLabel>
+                                    <FormDescription>Count match towards rating.</FormDescription>
                                 </div>
                                 <FormControl>
                                     <Switch checked={field.value} onCheckedChange={field.onChange} />
@@ -124,7 +124,9 @@ const AddMatch = () => {
                             </FormItem>
                         )}
                     />
-                    <Button type="submit">Submit</Button>
+                    <Button type="submit" variant="ghost">
+                        Submit
+                    </Button>
                 </form>
             </Form>
         </section>

@@ -41,11 +41,11 @@ export default MatchList;
 
 const MatchRow = ({ match, playerOne, playerTwo }: { match: Match; playerOne: User; playerTwo: User }) => {
     return (
-        <TableRow className="bg-background">
+        <TableRow>
             <TableCell className="p-1 text-center">
                 {!match.ranked && <p>-</p>}
-                {match.ranked && match.playerOneDiff >= 0 && <p className="text-green-500">+{match.playerOneDiff}</p>}
-                {match.ranked && match.playerOneDiff < 0 && <p className="text-red-500">{match.playerOneDiff}</p>}
+                {match.ranked && match.playerOneDiff >= 0 && <p className="text-ctp-green">+{match.playerOneDiff}</p>}
+                {match.ranked && match.playerOneDiff < 0 && <p className="text-ctp-red">{match.playerOneDiff}</p>}
             </TableCell>
             <TableCell className="flex items-center justify-start gap-2 p-0">
                 <Avatar className="h-8 w-8">
@@ -74,8 +74,8 @@ const MatchRow = ({ match, playerOne, playerTwo }: { match: Match; playerOne: Us
             </TableCell>
             <TableCell className="p-1 text-center">
                 {!match.ranked && <p>-</p>}
-                {match.ranked && match.playerTwoDiff >= 0 && <p className="text-green-500">+{match.playerTwoDiff}</p>}
-                {match.ranked && match.playerTwoDiff < 0 && <p className="text-red-500">{match.playerTwoDiff}</p>}
+                {match.ranked && match.playerTwoDiff >= 0 && <p className="text-ctp-green">+{match.playerTwoDiff}</p>}
+                {match.ranked && match.playerTwoDiff < 0 && <p className="text-ctp-red">{match.playerTwoDiff}</p>}
             </TableCell>
             <TableCell className="p-1">
                 <p>{match.ranked ? "Ranked" : "Casual"}</p>
