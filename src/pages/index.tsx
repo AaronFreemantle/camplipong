@@ -1,9 +1,9 @@
 import { useUser } from "@clerk/nextjs";
 import { type NextPage } from "next";
 import Head from "next/head";
-import AddMatch from "~/components/AddMatch";
-import Leaderboard from "~/components/Leaderboard";
-import MatchList from "~/components/MatchList";
+import AddMatch from "~/components/add-match";
+import Leaderboard from "~/components/leaderboard";
+import MatchList from "~/components/match-list";
 
 const Home: NextPage = () => {
     const user = useUser();

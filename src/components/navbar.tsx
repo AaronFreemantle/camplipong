@@ -1,8 +1,8 @@
 import { useUser, SignInButton, UserButton } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
-import { ThemeToggle } from "./ThemeToggle";
-import { Icons } from "./Icons";
+import { ThemeToggle } from "./theme-toggle";
+import { Icons } from "./icons";
 import { Button } from "./ui/button";
 
 export default function Navbar() {

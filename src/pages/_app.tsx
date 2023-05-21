@@ -5,7 +5,7 @@ import { api } from "~/utils/api";
 
 import "~/styles/globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
-import Layout from "~/components/Layout";
+import Layout from "~/components/layout";
 import { ThemeProvider } from "next-themes";
 
 const MyApp: AppType = ({ Component, pageProps }) => {
