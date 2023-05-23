@@ -9,6 +9,15 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "~/components/form";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "~/components/ui/dialog";
 
 const formSchema = z.object({
     playerOneScore: z.coerce.number().min(0).max(21),
@@ -43,92 +52,100 @@ const AddMatch = () => {
     }
     return (
         <section className="m-2">
-            {" "}
-            <h2 className="flex justify-center text-2xl">Add Match</h2>
-            <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col items-center gap-5">
-                    <FormField
-                        control={form.control}
-                        name="playerOneScore"
-                        render={({ field }) => (
-                            <FormItem className="w-full items-center gap-1.5">
-                                <FormLabel htmlFor="playerOneScore">Your Score</FormLabel>
-                                <FormControl>
-                                    <Input {...field} />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name="playerTwoScore"
-                        render={({ field }) => (
-                            <FormItem className="w-full items-center gap-1.5">
-                                <FormLabel htmlFor="playerTwoScore">{`Opponent's Score`}</FormLabel>
-                                <FormControl>
-                                    <Input {...field} />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name="playerTwoId"
-                        render={({ field }) => (
-                            <FormItem className="w-full items-center gap-1.5">
-                                <FormLabel htmlFor="playerTwoId">Opponent</FormLabel>
-                                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                    <FormControl>
-                                        <SelectTrigger className="w-full">
-                                            <SelectValue placeholder="Select an Opponent" />
-                                        </SelectTrigger>
-                                    </FormControl>
-                                    <SelectContent>
-                                        {users?.map((user) => {
-                                            if (user.id === currentUser.id) return null;
-                                            return (
-                                                <SelectItem key={user.id} value={user.id}>
-                                                    <div className="flex flex-row items-center justify-center gap-1">
-                                                        <Avatar className="h-8 w-8">
-                                                            <AvatarImage
-                                                                src={user.profileImageUrl}
-                                                                alt={user.firstName ?? ""}
-                                                            />
-                                                        </Avatar>
-                                                        {user.firstName} {user.lastName}
-                                                    </div>
-                                                </SelectItem>
-                                            );
-                                        })}
-                                    </SelectContent>
-                                </Select>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name="ranked"
-                        render={({ field }) => (
-                            <FormItem className="flex flex-row items-center gap-2 rounded-lg border p-4">
-                                <div className="space-y-0.5">
-                                    <FormLabel>Ranked</FormLabel>
-                                    <FormDescription>Count match towards rating.</FormDescription>
-                                </div>
-                                <FormControl>
-                                    <Switch checked={field.value} onCheckedChange={field.onChange} />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <Button type="submit" variant="ghost">
-                        Submit
-                    </Button>
-                </form>
-            </Form>
+            <Dialog>
+                <DialogTrigger>
+                    <Button variant="outline">Add Match</Button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-[425px]">
+                    <DialogHeader>
+                        <DialogTitle>Add Match</DialogTitle>
+                    </DialogHeader>
+                    <Form {...form}>
+                        <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col items-center gap-5">
+                            <FormField
+                                control={form.control}
+                                name="playerOneScore"
+                                render={({ field }) => (
+                                    <FormItem className="w-full items-center gap-1.5">
+                                        <FormLabel htmlFor="playerOneScore">Your Score</FormLabel>
+                                        <FormControl>
+                                            <Input {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="playerTwoScore"
+                                render={({ field }) => (
+                                    <FormItem className="w-full items-center gap-1.5">
+                                        <FormLabel htmlFor="playerTwoScore">{`Opponent's Score`}</FormLabel>
+                                        <FormControl>
+                                            <Input {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="playerTwoId"
+                                render={({ field }) => (
+                                    <FormItem className="w-full items-center gap-1.5">
+                                        <FormLabel htmlFor="playerTwoId">Opponent</FormLabel>
+                                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                            <FormControl>
+                                                <SelectTrigger className="w-full">
+                                                    <SelectValue placeholder="Select an Opponent" />
+                                                </SelectTrigger>
+                                            </FormControl>
+                                            <SelectContent>
+                                                {users?.map((user) => {
+                                                    if (user.id === currentUser.id) return null;
+                                                    return (
+                                                        <SelectItem key={user.id} value={user.id}>
+                                                            <div className="flex flex-row items-center justify-center gap-1">
+                                                                <Avatar className="h-8 w-8">
+                                                                    <AvatarImage
+                                                                        src={user.profileImageUrl}
+                                                                        alt={user.firstName ?? ""}
+                                                                    />
+                                                                </Avatar>
+                                                                {user.firstName} {user.lastName}
+                                                            </div>
+                                                        </SelectItem>
+                                                    );
+                                                })}
+                                            </SelectContent>
+                                        </Select>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="ranked"
+                                render={({ field }) => (
+                                    <FormItem className="flex w-full flex-row items-center justify-between rounded-lg border p-4">
+                                        <div className="space-y-0.5">
+                                            <FormLabel>Ranked</FormLabel>
+                                            <FormDescription>Count match towards rating.</FormDescription>
+                                        </div>
+                                        <FormControl>
+                                            <Switch checked={field.value} onCheckedChange={field.onChange} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <Button type="submit" variant="ghost">
+                                Submit
+                            </Button>
+                        </form>
+                    </Form>
+                </DialogContent>
+            </Dialog>
         </section>
     );
 };
