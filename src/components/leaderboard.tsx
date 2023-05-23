@@ -11,7 +11,7 @@ const Leaderboard = () => {
                 <TableHeader>
                     <TableRow>
                         <TableHead>👑</TableHead>
-                        <TableHead>Player 1</TableHead>
+                        <TableHead>Player</TableHead>
                         <TableHead className="text-center">Matches</TableHead>
                         <TableHead className="text-center">Wins</TableHead>
                         <TableHead className="text-center">Losses</TableHead>

@@ -48,7 +48,7 @@ const MatchRow = ({ match, playerOne, playerTwo }: { match: Match; playerOne: Us
                 {match.ranked && match.playerOneDiff < 0 && <p className="text-ctp-red">{match.playerOneDiff}</p>}
             </TableCell>
             <TableCell className="inline-table p-4">
-                <div className="flex items-center gap-2 text-left">
+                <div className="flex items-center gap-2 py-4 text-left">
                     <Avatar className="h-8 w-8">
                         <AvatarImage src={playerOne.profileImageUrl} alt={playerOne.firstName ?? ""} />
                     </Avatar>
@@ -57,17 +57,17 @@ const MatchRow = ({ match, playerOne, playerTwo }: { match: Match; playerOne: Us
                     </p>
                 </div>
             </TableCell>
-            <TableCell className="p-4 text-center font-bold">
+            <TableCell className="py-4 text-center font-bold">
                 <p>{match.playerOneScore}</p>
             </TableCell>
             <TableCell className="px-0 py-4 text-center">
                 <p>vs</p>
             </TableCell>
-            <TableCell className="p-4 text-center font-bold">
+            <TableCell className="py-4 text-center font-bold">
                 <p>{match.playerTwoScore}</p>
             </TableCell>
-            <TableCell className="inline-table p-4">
-                <div className="flex items-center gap-2 text-right">
+            <TableCell className="inline-table">
+                <div className="flex items-center gap-2 py-4 text-right">
                     <p>
                         {playerTwo.firstName} {playerTwo.lastName?.charAt(0)}
                     </p>
