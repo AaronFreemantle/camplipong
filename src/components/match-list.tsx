@@ -42,42 +42,46 @@ export default MatchList;
 const MatchRow = ({ match, playerOne, playerTwo }: { match: Match; playerOne: User; playerTwo: User }) => {
     return (
         <TableRow>
-            <TableCell className="p-1 text-center">
+            <TableCell className="p-4 text-center font-bold">
                 {!match.ranked && <p>-</p>}
                 {match.ranked && match.playerOneDiff >= 0 && <p className="text-ctp-green">+{match.playerOneDiff}</p>}
                 {match.ranked && match.playerOneDiff < 0 && <p className="text-ctp-red">{match.playerOneDiff}</p>}
             </TableCell>
-            <TableCell className="flex items-center justify-start gap-2 p-0">
-                <Avatar className="h-8 w-8">
-                    <AvatarImage src={playerOne.profileImageUrl} alt={playerOne.firstName ?? ""} />
-                </Avatar>
-                <p className="hidden sm:block">
-                    {playerOne.firstName} {playerOne.lastName}
-                </p>
+            <TableCell className="inline-table p-4">
+                <div className="flex items-center gap-2 text-left">
+                    <Avatar className="h-8 w-8">
+                        <AvatarImage src={playerOne.profileImageUrl} alt={playerOne.firstName ?? ""} />
+                    </Avatar>
+                    <p>
+                        {playerOne.firstName} {playerOne.lastName?.charAt(0)}
+                    </p>
+                </div>
             </TableCell>
-            <TableCell className="p-1 text-center">
+            <TableCell className="p-4 text-center font-bold">
                 <p>{match.playerOneScore}</p>
             </TableCell>
-            <TableCell className="p-0">
+            <TableCell className="px-0 py-4 text-center">
                 <p>vs</p>
             </TableCell>
-            <TableCell className="p-1 text-center">
+            <TableCell className="p-4 text-center font-bold">
                 <p>{match.playerTwoScore}</p>
             </TableCell>
-            <TableCell className="flex items-center justify-end gap-2 p-0">
-                <p className="hidden sm:block">
-                    {playerTwo.firstName} {playerTwo.lastName}
-                </p>
-                <Avatar className="h-8 w-8">
-                    <AvatarImage src={playerTwo.profileImageUrl} alt={playerTwo.firstName ?? ""} />
-                </Avatar>
+            <TableCell className="inline-table p-4">
+                <div className="flex items-center gap-2 text-right">
+                    <p>
+                        {playerTwo.firstName} {playerTwo.lastName?.charAt(0)}
+                    </p>
+                    <Avatar className="h-8 w-8">
+                        <AvatarImage src={playerTwo.profileImageUrl} alt={playerTwo.firstName ?? ""} />
+                    </Avatar>
+                </div>
             </TableCell>
-            <TableCell className="p-1 text-center">
+            <TableCell className="p-4 text-center font-bold">
                 {!match.ranked && <p>-</p>}
                 {match.ranked && match.playerTwoDiff >= 0 && <p className="text-ctp-green">+{match.playerTwoDiff}</p>}
                 {match.ranked && match.playerTwoDiff < 0 && <p className="text-ctp-red">{match.playerTwoDiff}</p>}
             </TableCell>
-            <TableCell className="p-1">
+            <TableCell className="p-4 text-center">
                 <p>{match.ranked ? "Ranked" : "Casual"}</p>
             </TableCell>
         </TableRow>
