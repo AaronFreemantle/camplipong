@@ -10,6 +10,7 @@ const Leaderboard = () => {
             <Table>
                 <TableHeader>
                     <TableRow>
+                        <TableHead>👑</TableHead>
                         <TableHead>Player 1</TableHead>
                         <TableHead className="text-center">Matches</TableHead>
                         <TableHead className="text-center">Wins</TableHead>
@@ -42,6 +43,7 @@ const Leaderboard = () => {
                                     wins={wins}
                                     losses={losses}
                                     elo={elo as number}
+                                    champion={false}
                                 />
                             );
                         })}
@@ -61,6 +63,7 @@ const LeaderboardRow = ({
     wins,
     losses,
     elo,
+    champion,
 }: {
     firstName: string;
     lastName: string;
@@ -69,9 +72,11 @@ const LeaderboardRow = ({
     wins: number;
     losses: number;
     elo: number;
+    champion: boolean;
 }) => {
     return (
         <TableRow>
+            <TableCell>{champion ? "🏓" : ""}</TableCell>
             <TableCell className="flex items-center gap-2">
                 <Avatar className="h-8 w-8">
                     <AvatarImage src={profileImageUrl} alt={firstName ?? ""} />
