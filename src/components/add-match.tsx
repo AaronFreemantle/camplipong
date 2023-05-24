@@ -23,7 +23,7 @@ const formSchema = z.object({
     playerOneScore: z.coerce.number().min(0).max(21),
     playerTwoScore: z.coerce.number().min(0).max(21),
     playerTwoId: z.string(),
-    ranked: z.boolean(),
+    casual: z.boolean(),
 });
 
 const AddMatch = () => {
@@ -48,6 +48,7 @@ const AddMatch = () => {
     function onSubmit(values: z.infer<typeof formSchema>) {
         createMatch({
             ...values,
+            ranked: !values.casual,
         });
     }
     return (
@@ -125,12 +126,12 @@ const AddMatch = () => {
                             />
                             <FormField
                                 control={form.control}
-                                name="ranked"
+                                name="casual"
                                 render={({ field }) => (
                                     <FormItem className="flex w-full flex-row items-center justify-between rounded-lg border p-4">
                                         <div className="space-y-0.5">
-                                            <FormLabel>Ranked</FormLabel>
-                                            <FormDescription>Count match towards rating.</FormDescription>
+                                            <FormLabel>Casual</FormLabel>
+                                            <FormDescription>Exclude match from rating.</FormDescription>
                                         </div>
                                         <FormControl>
                                             <Switch checked={field.value} onCheckedChange={field.onChange} />
