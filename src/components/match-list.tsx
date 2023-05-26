@@ -19,7 +19,6 @@ const MatchList = () => {
                         <TableHead className="p-1 text-center">P2 Score</TableHead>
                         <TableHead className="p-1 text-center">Player 2</TableHead>
                         <TableHead className="p-1 text-center">Rating +/-</TableHead>
-                        <TableHead className="p-1 text-center">Ranked</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -43,9 +42,8 @@ const MatchRow = ({ match, playerOne, playerTwo }: { match: Match; playerOne: Us
     return (
         <TableRow>
             <TableCell className="p-4 text-center font-bold">
-                {!match.ranked && <p>-</p>}
-                {match.ranked && match.playerOneDiff >= 0 && <p className="text-ctp-green">+{match.playerOneDiff}</p>}
-                {match.ranked && match.playerOneDiff < 0 && <p className="text-ctp-red">{match.playerOneDiff}</p>}
+                {match.playerOneDiff >= 0 && <p className="text-ctp-green">+{match.playerOneDiff}</p>}
+                {match.playerOneDiff < 0 && <p className="text-ctp-red">{match.playerOneDiff}</p>}
             </TableCell>
             <TableCell className="inline-table p-4">
                 <div className="flex items-center gap-2 py-4 text-left">
@@ -77,12 +75,8 @@ const MatchRow = ({ match, playerOne, playerTwo }: { match: Match; playerOne: Us
                 </div>
             </TableCell>
             <TableCell className="p-4 text-center font-bold">
-                {!match.ranked && <p>-</p>}
-                {match.ranked && match.playerTwoDiff >= 0 && <p className="text-ctp-green">+{match.playerTwoDiff}</p>}
-                {match.ranked && match.playerTwoDiff < 0 && <p className="text-ctp-red">{match.playerTwoDiff}</p>}
-            </TableCell>
-            <TableCell className="p-4 text-center">
-                <p>{match.ranked ? "Ranked" : "Casual"}</p>
+                {match.playerTwoDiff >= 0 && <p className="text-ctp-green">+{match.playerTwoDiff}</p>}
+                {match.playerTwoDiff < 0 && <p className="text-ctp-red">{match.playerTwoDiff}</p>}
             </TableCell>
         </TableRow>
     );

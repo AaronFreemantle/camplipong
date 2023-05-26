@@ -54,7 +54,7 @@ export const matchRouter = createTRPCRouter({
                 playerTwoId: z.string(),
                 playerOneScore: z.number(),
                 playerTwoScore: z.number(),
-                ranked: z.boolean().default(false),
+                ranked: z.boolean().default(true),
             })
         )
         .mutation(async ({ ctx, input }) => {

@@ -4,37 +4,28 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "~
 import { api } from "~/utils/api";
 import { Avatar, AvatarImage } from "~/components/ui/avatar";
 import { Button } from "~/components/ui/button";
-import { Switch } from "~/components/ui/switch";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "~/components/form";
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from "~/components/ui/dialog";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "~/components/form";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "~/components/ui/dialog";
+import { useState } from "react";
 
 const formSchema = z.object({
     playerOneScore: z.coerce.number().min(0).max(21),
     playerTwoScore: z.coerce.number().min(0).max(21),
     playerTwoId: z.string(),
-    casual: z.boolean(),
 });
 
 const AddMatch = () => {
     const { user: currentUser, isSignedIn } = useUser();
-
     const { data: users } = api.user.getAll.useQuery();
     const ctx = api.useContext();
+
     const { mutate: createMatch } = api.match.create.useMutation({
         onSuccess: () => {
             void ctx.match.getAll.invalidate();
-            void ctx.user.getAll.invalidate();
+            void ctx.user.getAllWithMatches.invalidate();
         },
     });
 
@@ -43,17 +34,19 @@ const AddMatch = () => {
         mode: "onTouched",
     });
 
+    const [open, setOpen] = useState(false);
+
     if (!isSignedIn) return null;
 
     function onSubmit(values: z.infer<typeof formSchema>) {
         createMatch({
             ...values,
-            ranked: !values.casual,
         });
+        setOpen(false);
     }
     return (
         <section className="m-2">
-            <Dialog>
+            <Dialog open={open} onOpenChange={setOpen}>
                 <DialogTrigger>
                     <Button variant="outline">Add Match</Button>
                 </DialogTrigger>
@@ -120,22 +113,6 @@ const AddMatch = () => {
                                                 })}
                                             </SelectContent>
                                         </Select>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name="casual"
-                                render={({ field }) => (
-                                    <FormItem className="flex w-full flex-row items-center justify-between rounded-lg border p-4">
-                                        <div className="space-y-0.5">
-                                            <FormLabel>Casual</FormLabel>
-                                            <FormDescription>Exclude match from rating.</FormDescription>
-                                        </div>
-                                        <FormControl>
-                                            <Switch checked={field.value} onCheckedChange={field.onChange} />
-                                        </FormControl>
                                         <FormMessage />
                                     </FormItem>
                                 )}
