@@ -26,6 +26,7 @@ const Leaderboard = () => {
                                 id,
                                 firstName,
                                 lastName,
+                                username,
                                 profileImageUrl,
                                 matches,
                                 wins,
@@ -38,6 +39,7 @@ const Leaderboard = () => {
                                     key={id}
                                     firstName={firstName ?? ""}
                                     lastName={lastName ?? ""}
+                                    username={username}
                                     profileImageUrl={profileImageUrl}
                                     matches={matches}
                                     wins={wins}
@@ -58,6 +60,7 @@ export default Leaderboard;
 const LeaderboardRow = ({
     firstName,
     lastName,
+    username,
     profileImageUrl,
     matches,
     wins,
@@ -67,6 +70,7 @@ const LeaderboardRow = ({
 }: {
     firstName: string;
     lastName: string;
+    username: string | null;
     profileImageUrl: string;
     matches: number;
     wins: number;
@@ -81,9 +85,7 @@ const LeaderboardRow = ({
                 <Avatar className="h-8 w-8">
                     <AvatarImage src={profileImageUrl} alt={firstName ?? ""} />
                 </Avatar>
-                <p>
-                    {firstName} {lastName}
-                </p>
+                <p>{username ? username : `${firstName} ${lastName}`}</p>
             </TableCell>
             <TableCell className="text-center">
                 <p>{matches}</p>
