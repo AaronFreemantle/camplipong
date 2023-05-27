@@ -13,8 +13,8 @@ import { useState } from "react";
 
 const formSchema = z
     .object({
-        playerOneScore: z.coerce.number().min(0),
-        playerTwoScore: z.coerce.number().min(0),
+        playerOneScore: z.coerce.number({ invalid_type_error: "Expected number" }).min(0),
+        playerTwoScore: z.coerce.number({ invalid_type_error: "Expected number" }).min(0),
         playerTwoId: z.string(),
     })
     .refine(
