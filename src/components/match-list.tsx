@@ -1,7 +1,7 @@
 import { api } from "~/utils/api";
 import { Avatar, AvatarImage } from "~/components/ui/avatar";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "~/components/ui/table";
-import { type User } from "@clerk/nextjs/dist/api";
+import { type User } from "@clerk/nextjs/dist/types/server";
 import { type Match } from "@prisma/client";
 
 const MatchList = () => {
