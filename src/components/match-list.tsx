@@ -13,11 +13,11 @@ const MatchList = () => {
                 <TableHeader>
                     <TableRow>
                         <TableHead className="p-1 text-center">Rating +/-</TableHead>
-                        <TableHead className="p-1 text-center">Player 1</TableHead>
+                        <TableHead className="p-1 px-4 text-left">Player 1</TableHead>
                         <TableHead className="p-1 text-center">P1 Score</TableHead>
                         <TableHead className="p-0 text-center"></TableHead>
                         <TableHead className="p-1 text-center">P2 Score</TableHead>
-                        <TableHead className="p-1 text-center">Player 2</TableHead>
+                        <TableHead className="p-1 px-4 text-right">Player 2</TableHead>
                         <TableHead className="p-1 text-center">Rating +/-</TableHead>
                     </TableRow>
                 </TableHeader>
@@ -45,8 +45,8 @@ const MatchRow = ({ match, playerOne, playerTwo }: { match: Match; playerOne: Us
                 {match.playerOneDiff >= 0 && <p className="text-ctp-green">+{match.playerOneDiff}</p>}
                 {match.playerOneDiff < 0 && <p className="text-ctp-red">{match.playerOneDiff}</p>}
             </TableCell>
-            <TableCell className="inline-table p-4">
-                <div className="flex items-center gap-2 py-4 text-left">
+            <TableCell className="p-4">
+                <div className="flex items-center gap-2 text-left">
                     <Avatar className="h-8 w-8">
                         <AvatarImage src={playerOne.profileImageUrl} alt={playerOne.firstName ?? ""} />
                     </Avatar>
@@ -66,8 +66,8 @@ const MatchRow = ({ match, playerOne, playerTwo }: { match: Match; playerOne: Us
             <TableCell className="py-4 text-center font-bold">
                 <p>{match.playerTwoScore}</p>
             </TableCell>
-            <TableCell className="inline-table">
-                <div className="flex items-center gap-2 py-4 text-right">
+            <TableCell className="justify-end p-4">
+                <div className="flex items-center justify-end gap-2 text-right">
                     <p>
                         {playerTwo.username
                             ? playerTwo.username
