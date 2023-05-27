@@ -9,100 +9,26 @@ const MatchList = () => {
     const { data: matchesWithPlayers, isLoading } = api.match.getAll.useQuery();
 
     if (isLoading) {
-        return (
-            <section className="width-full m-4">
-                <h2 className="m-2 flex justify-center text-2xl">Recent Matches</h2>
-                <Table>
-                    <TableHeader>
-                        <TableRow>
-                            <TableHead className="p-1 text-center">Rating +/-</TableHead>
-                            <TableHead className="p-1 px-4 text-left">Player 1</TableHead>
-                            <TableHead className="p-1 text-center">P1 Score</TableHead>
-                            <TableHead className="p-0 text-center"></TableHead>
-                            <TableHead className="p-1 text-center">P2 Score</TableHead>
-                            <TableHead className="p-1 px-4 text-right">Player 2</TableHead>
-                            <TableHead className="p-1 text-center">Rating +/-</TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        {[...(Array(10) as number[])].map((_, i) => (
-                            <TableRow key={i}>
-                                <TableCell className="p-2">
-                                    <div className="flex justify-center">
-                                        <Skeleton className="h-4 w-6 bg-ctp-green" />
-                                    </div>
-                                </TableCell>
-                                <TableCell className="p-4">
-                                    <div className="flex items-center gap-2">
-                                        <Skeleton className="h-8 w-8 rounded-full" />
-                                        <Skeleton className="h-4 w-16" />
-                                    </div>
-                                </TableCell>
-                                <TableCell className="py-4 text-center font-bold">
-                                    <div className="flex justify-center">
-                                        <Skeleton className="h-4 w-8" />
-                                    </div>
-                                </TableCell>
-                                <TableCell className="px-0 py-4 text-center">
-                                    <div className="flex justify-center">
-                                        <Skeleton className="h-4 w-4" />
-                                    </div>
-                                </TableCell>
-                                <TableCell className="py-4 text-center font-bold">
-                                    <div className="flex justify-center">
-                                        <Skeleton className="h-4 w-8" />
-                                    </div>
-                                </TableCell>
-                                <TableCell className="justify-end p-4">
-                                    <div className="flex items-center justify-end gap-2">
-                                        <Skeleton className="h-4 w-16" />
-                                        <Skeleton className="h-8 w-8 rounded-full" />
-                                    </div>
-                                </TableCell>
-                                <TableCell className="p-2 text-center font-bold">
-                                    <div className="flex justify-center">
-                                        <Skeleton className="h-4 w-6 bg-ctp-red" />
-                                    </div>
-                                </TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </section>
-        );
+        return <MatchListSkeleton />;
     }
 
     return (
-        <>
-            <section className="width-full m-4">
-                <h2 className="m-2 flex justify-center text-2xl">Recent Matches</h2>
-                <Table>
-                    <TableHeader>
-                        <TableRow>
-                            <TableHead className="p-1 text-center">Rating +/-</TableHead>
-                            <TableHead className="p-1 px-4 text-left">Player 1</TableHead>
-                            <TableHead className="p-1 text-center">P1 Score</TableHead>
-                            <TableHead className="p-0 text-center"></TableHead>
-                            <TableHead className="p-1 text-center">P2 Score</TableHead>
-                            <TableHead className="p-1 px-4 text-right">Player 2</TableHead>
-                            <TableHead className="p-1 text-center">Rating +/-</TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        {matchesWithPlayers?.map((matchWithPlayers) => {
-                            const {
-                                match,
-                                players: { playerOne, playerTwo },
-                            } = matchWithPlayers;
+        <section className="width-full m-4">
+            <h2 className="m-2 flex justify-center text-2xl">Recent Matches</h2>
+            <Table>
+                <MatchTableHead />
+                <TableBody>
+                    {matchesWithPlayers?.map((matchWithPlayers) => {
+                        const {
+                            match,
+                            players: { playerOne, playerTwo },
+                        } = matchWithPlayers;
 
-                            return (
-                                <MatchRow key={match.id} match={match} playerOne={playerOne} playerTwo={playerTwo} />
-                            );
-                        })}
-                    </TableBody>
-                </Table>
-            </section>
-        </>
+                        return <MatchRow key={match.id} match={match} playerOne={playerOne} playerTwo={playerTwo} />;
+                    })}
+                </TableBody>
+            </Table>
+        </section>
     );
 };
 
@@ -153,5 +79,75 @@ const MatchRow = ({ match, playerOne, playerTwo }: { match: Match; playerOne: Us
                 {match.playerTwoDiff < 0 && <p className="text-ctp-red">{match.playerTwoDiff}</p>}
             </TableCell>
         </TableRow>
+    );
+};
+
+const MatchTableHead = () => {
+    return (
+        <TableHeader>
+            <TableRow>
+                <TableHead className="p-1 text-center">Rating +/-</TableHead>
+                <TableHead className="p-1 px-4 text-left">Player 1</TableHead>
+                <TableHead className="p-1 text-center">P1 Score</TableHead>
+                <TableHead className="p-0 text-center"></TableHead>
+                <TableHead className="p-1 text-center">P2 Score</TableHead>
+                <TableHead className="p-1 px-4 text-right">Player 2</TableHead>
+                <TableHead className="p-1 text-center">Rating +/-</TableHead>
+            </TableRow>
+        </TableHeader>
+    );
+};
+
+const MatchListSkeleton = () => {
+    return (
+        <section className="width-full m-4">
+            <h2 className="m-2 flex justify-center text-2xl">Recent Matches</h2>
+            <Table>
+                <MatchTableHead />
+                <TableBody>
+                    {[...(Array(10) as number[])].map((_, i) => (
+                        <TableRow key={i}>
+                            <TableCell className="p-2">
+                                <div className="flex justify-center">
+                                    <Skeleton className="h-4 w-6 bg-ctp-green" />
+                                </div>
+                            </TableCell>
+                            <TableCell className="p-4">
+                                <div className="flex items-center gap-2">
+                                    <Skeleton className="h-8 w-8 rounded-full" />
+                                    <Skeleton className="h-4 w-16" />
+                                </div>
+                            </TableCell>
+                            <TableCell className="py-4 text-center font-bold">
+                                <div className="flex justify-center">
+                                    <Skeleton className="h-4 w-8" />
+                                </div>
+                            </TableCell>
+                            <TableCell className="px-0 py-4 text-center">
+                                <div className="flex justify-center">
+                                    <Skeleton className="h-4 w-4" />
+                                </div>
+                            </TableCell>
+                            <TableCell className="py-4 text-center font-bold">
+                                <div className="flex justify-center">
+                                    <Skeleton className="h-4 w-8" />
+                                </div>
+                            </TableCell>
+                            <TableCell className="justify-end p-4">
+                                <div className="flex items-center justify-end gap-2">
+                                    <Skeleton className="h-4 w-16" />
+                                    <Skeleton className="h-8 w-8 rounded-full" />
+                                </div>
+                            </TableCell>
+                            <TableCell className="p-2 text-center font-bold">
+                                <div className="flex justify-center">
+                                    <Skeleton className="h-4 w-6 bg-ctp-red" />
+                                </div>
+                            </TableCell>
+                        </TableRow>
+                    ))}
+                </TableBody>
+            </Table>
+        </section>
     );
 };
