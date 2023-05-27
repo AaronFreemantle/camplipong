@@ -11,11 +11,24 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "./ui/collapsible";
 import { useState } from "react";
 
-const formSchema = z.object({
-    playerOneScore: z.coerce.number().min(0).max(21),
-    playerTwoScore: z.coerce.number().min(0).max(21),
-    playerTwoId: z.string(),
-});
+const formSchema = z
+    .object({
+        playerOneScore: z.coerce.number().min(0),
+        playerTwoScore: z.coerce.number().min(0),
+        playerTwoId: z.string(),
+    })
+    .refine(
+        ({ playerOneScore, playerTwoScore }) => {
+            return playerOneScore > playerTwoScore || playerOneScore < playerTwoScore;
+        },
+        { message: "Scores must be different", path: ["playerOneScore"] }
+    )
+    .refine(
+        ({ playerOneScore, playerTwoScore }) => {
+            return playerOneScore > playerTwoScore || playerOneScore < playerTwoScore;
+        },
+        { message: "Scores must be different", path: ["playerTwoScore"] }
+    );
 
 const AddMatch = () => {
     const { user: currentUser, isSignedIn } = useUser();
