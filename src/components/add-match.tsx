@@ -8,7 +8,6 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "~/components/form";
-import { ChevronsUpDown } from "lucide-react";
 import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "./ui/collapsible";
 import { useState } from "react";
 
@@ -23,7 +22,7 @@ const AddMatch = () => {
     const { data: users } = api.user.getAll.useQuery();
     const ctx = api.useContext();
 
-    const { mutate: createMatch } = api.match.create.useMutation({
+    const { mutate: createMatch, isLoading } = api.match.create.useMutation({
         onSuccess: () => {
             void ctx.match.getAll.invalidate();
             void ctx.user.getAllWithMatches.invalidate();
@@ -66,7 +65,7 @@ const AddMatch = () => {
                                     <FormItem className="w-full items-center gap-1.5">
                                         <FormLabel htmlFor="playerOneScore">Your Score</FormLabel>
                                         <FormControl>
-                                            <Input {...field} />
+                                            <Input disabled={isLoading} {...field} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -79,7 +78,7 @@ const AddMatch = () => {
                                     <FormItem className="w-full items-center gap-1.5">
                                         <FormLabel htmlFor="playerTwoScore">{`Opponent's Score`}</FormLabel>
                                         <FormControl>
-                                            <Input {...field} />
+                                            <Input disabled={isLoading} {...field} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -91,7 +90,11 @@ const AddMatch = () => {
                                 render={({ field }) => (
                                     <FormItem className="w-full items-center gap-1.5">
                                         <FormLabel htmlFor="playerTwoId">Opponent</FormLabel>
-                                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                        <Select
+                                            disabled={isLoading}
+                                            onValueChange={field.onChange}
+                                            defaultValue={field.value}
+                                        >
                                             <FormControl>
                                                 <SelectTrigger className="w-full">
                                                     <SelectValue placeholder="Select an Opponent" />
@@ -120,7 +123,7 @@ const AddMatch = () => {
                                     </FormItem>
                                 )}
                             />
-                            <Button type="submit" variant="outline">
+                            <Button disabled={isLoading} type="submit" variant="outline">
                                 Submit
                             </Button>
                         </form>
