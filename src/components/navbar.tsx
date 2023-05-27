@@ -4,7 +4,6 @@ import Link from "next/link";
 import { ThemeToggle } from "./theme-toggle";
 import { Icons } from "./icons";
 import { Button } from "./ui/button";
-import AddMatch from "./add-match";
 
 export default function Navbar() {
     const { user, isSignedIn } = useUser();
@@ -20,11 +19,6 @@ export default function Navbar() {
                         </h1>
                     </Link>
                 </li>
-                {isSignedIn && (
-                    <li>
-                        <AddMatch />
-                    </li>
-                )}
                 <li>
                     <Button
                         variant="ghost"

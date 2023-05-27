@@ -1,5 +1,7 @@
 import { type NextPage } from "next";
 import Head from "next/head";
+import AddMatch from "~/components/add-match";
+import Champion from "~/components/champion";
 import Leaderboard from "~/components/leaderboard";
 import MatchList from "~/components/match-list";
 
@@ -13,8 +15,14 @@ const Home: NextPage = () => {
             </Head>
             <div>
                 <div className="grid-cols-2 xl:grid">
-                    <MatchList />
-                    <Leaderboard />
+                    <div>
+                        <AddMatch />
+                        <MatchList />
+                    </div>
+                    <div>
+                        <Champion />
+                        <Leaderboard />
+                    </div>
                 </div>
             </div>
         </>

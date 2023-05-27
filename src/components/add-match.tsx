@@ -8,7 +8,8 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "~/components/form";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "~/components/ui/dialog";
+import { ChevronsUpDown } from "lucide-react";
+import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "./ui/collapsible";
 import { useState } from "react";
 
 const formSchema = z.object({
@@ -29,12 +30,12 @@ const AddMatch = () => {
         },
     });
 
+    const [isOpen, setIsOpen] = useState(false);
+
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         mode: "onTouched",
     });
-
-    const [open, setOpen] = useState(false);
 
     if (!isSignedIn) return null;
 
@@ -42,18 +43,20 @@ const AddMatch = () => {
         createMatch({
             ...values,
         });
-        setOpen(false);
     }
+
     return (
         <section className="m-2">
-            <Dialog open={open} onOpenChange={setOpen}>
-                <DialogTrigger>
-                    <Button variant="outline">Add Match</Button>
-                </DialogTrigger>
-                <DialogContent className="sm:max-w-[425px]">
-                    <DialogHeader>
-                        <DialogTitle>Add Match</DialogTitle>
-                    </DialogHeader>
+            <Collapsible open={isOpen} onOpenChange={setIsOpen}>
+                <div className="flex items-center justify-center px-4">
+                    <CollapsibleTrigger asChild>
+                        <Button variant="outline">
+                            <h2 className="text-center text-2xl">Add Match</h2>
+                            <span className="sr-only">Toggle</span>
+                        </Button>
+                    </CollapsibleTrigger>
+                </div>
+                <CollapsibleContent className="">
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col items-center gap-5">
                             <FormField
@@ -117,13 +120,13 @@ const AddMatch = () => {
                                     </FormItem>
                                 )}
                             />
-                            <Button type="submit" variant="ghost">
+                            <Button type="submit" variant="outline">
                                 Submit
                             </Button>
                         </form>
                     </Form>
-                </DialogContent>
-            </Dialog>
+                </CollapsibleContent>
+            </Collapsible>
         </section>
     );
 };
