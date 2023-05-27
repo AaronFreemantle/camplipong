@@ -50,7 +50,7 @@ const MatchRow = ({ match, playerOne, playerTwo }: { match: Match; playerOne: Us
                     <Avatar className="h-8 w-8">
                         <AvatarImage src={playerOne.profileImageUrl} alt={playerOne.firstName ?? ""} />
                     </Avatar>
-                    <p>
+                    <p className="hidden sm:block">
                         {playerOne.username
                             ? playerOne.username
                             : `${playerOne.firstName ?? ""} ${playerOne.lastName ?? ""}`}
@@ -68,7 +68,7 @@ const MatchRow = ({ match, playerOne, playerTwo }: { match: Match; playerOne: Us
             </TableCell>
             <TableCell className="justify-end p-4">
                 <div className="flex items-center justify-end gap-2 text-right">
-                    <p>
+                    <p className="hidden sm:block">
                         {playerTwo.username
                             ? playerTwo.username
                             : `${playerTwo.firstName ?? ""} ${playerTwo.lastName ?? ""}`}
