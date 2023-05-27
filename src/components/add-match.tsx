@@ -60,9 +60,9 @@ const AddMatch = () => {
     return (
         <section className="m-2">
             <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-                <div className="flex items-center justify-center px-4">
+                <div className="flex items-center justify-center">
                     <CollapsibleTrigger asChild>
-                        <Button variant="outline">
+                        <Button variant="ghost" className="w-full">
                             <h2 className="text-center text-2xl">Add Match</h2>
                             <span className="sr-only">Toggle</span>
                         </Button>
