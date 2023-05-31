@@ -7,7 +7,7 @@ export const userRouter = createTRPCRouter({
         return await clerkClient.users.getUserList();
     }),
     getAllWithMatches: publicProcedure.query(async ({ ctx }) => {
-        const users = (await clerkClient.users.getUserList()) as (User & {
+        const users = (await clerkClient.users.getUserList({ limit: 100 })) as (User & {
             matches: number;
             wins: number;
             losses: number;
