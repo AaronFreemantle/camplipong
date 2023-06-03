@@ -13,8 +13,8 @@ const Home: NextPage = () => {
                 <meta name="description" content="Camplify Ping Pong Leaderboard" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <Tabs defaultValue="leaderboard" className="flex flex-col items-center">
-                <TabsList className="w-min">
+            <Tabs defaultValue="leaderboard" className="flex flex-col md:items-center">
+                <TabsList className="m-auto w-min">
                     <TabsTrigger value="leaderboard">Leaderboard</TabsTrigger>
                     <TabsTrigger value="matches">Matches</TabsTrigger>
                 </TabsList>

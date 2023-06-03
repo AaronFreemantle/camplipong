@@ -10,7 +10,7 @@ export default function Navbar() {
     const { user, isSignedIn, isLoaded } = useUser();
 
     return (
-        <nav className="md:mx-auto md:my-0 md:max-w-screen-xl">
+        <nav className="max-w-screen-xl md:mx-auto md:my-0">
             <ul className="flex flex-row flex-wrap items-center justify-center gap-2 p-2 text-xl font-medium">
                 <li className="flex basis-full items-center justify-center gap-2 md:mr-auto md:basis-auto md:text-left">
                     <Image src="/favicon.ico" alt="Camplipong" width="40" height="40" />

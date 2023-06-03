@@ -35,6 +35,7 @@ const config = {
                 },
             },
         ],
+        "react/display-name": "off",
     },
 };
 
