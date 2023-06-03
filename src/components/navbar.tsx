@@ -4,9 +4,10 @@ import Link from "next/link";
 import { ThemeToggle } from "./theme-toggle";
 import { Icons } from "./icons";
 import { Button } from "./ui/button";
+import { Skeleton } from "./ui/skeleton";
 
 export default function Navbar() {
-    const { user, isSignedIn } = useUser();
+    const { user, isSignedIn, isLoaded } = useUser();
 
     return (
         <nav className="md:mx-auto md:my-0 md:max-w-screen-xl">
@@ -32,8 +33,17 @@ export default function Navbar() {
                 <li>
                     <ThemeToggle />
                 </li>
-                <li>{!isSignedIn ? <SignInButton /> : <p>{user.fullName}</p>}</li>
-                <UserButton />
+                {isLoaded ? (
+                    <>
+                        <li>{!isSignedIn ? <SignInButton /> : <p>{user.fullName}</p>}</li>
+                        <UserButton />
+                    </>
+                ) : (
+                    <div className="flex items-center gap-2">
+                        <Skeleton className="h-4 w-32" />
+                        <Skeleton className="h-8 w-8 rounded-full" />
+                    </div>
+                )}
             </ul>
         </nav>
     );
