@@ -24,10 +24,11 @@ const Leaderboard = () => {
                                 firstName,
                                 lastName,
                                 username,
-                                profileImageUrl,
+                                imageUrl,
                                 matches,
                                 wins,
                                 losses,
+                                winrate,
                                 publicMetadata: { elo },
                             } = user;
 
@@ -37,10 +38,11 @@ const Leaderboard = () => {
                                     firstName={firstName ?? ""}
                                     lastName={lastName ?? ""}
                                     username={username}
-                                    profileImageUrl={profileImageUrl}
+                                    imageUrl={imageUrl}
                                     matches={matches}
                                     wins={wins}
                                     losses={losses}
+                                    winrate={winrate}
                                     elo={elo as number}
                                     champion={false}
                                 />
@@ -58,29 +60,30 @@ const LeaderboardRow = ({
     firstName,
     lastName,
     username,
-    profileImageUrl,
+    imageUrl,
     matches,
     wins,
     losses,
+    winrate,
     elo,
     champion,
 }: {
     firstName: string;
     lastName: string;
     username: string | null;
-    profileImageUrl: string;
+    imageUrl: string;
     matches: number;
     wins: number;
     losses: number;
+    winrate: number;
     elo: number;
     champion: boolean;
 }) => {
     return (
         <TableRow>
-            <TableCell>{champion ? "🏓" : ""}</TableCell>
             <TableCell className="flex items-center gap-2">
                 <Avatar className="h-8 w-8">
-                    <AvatarImage src={profileImageUrl} alt={firstName ?? ""} />
+                    <AvatarImage src={imageUrl} alt={firstName ?? ""} />
                 </Avatar>
                 <p className="hidden sm:block">{username ? username : `${firstName} ${lastName}`}</p>
             </TableCell>
@@ -92,6 +95,9 @@ const LeaderboardRow = ({
             </TableCell>
             <TableCell className="text-center">
                 <p>{losses}</p>
+            </TableCell>
+            <TableCell className="text-center">
+                <p>{winrate.toFixed(2)}%</p>
             </TableCell>
             <TableCell className="text-right">
                 <p>{elo}</p>
@@ -105,13 +111,13 @@ const LeaderboardTableHead = () => {
     return (
         <TableHeader>
             <TableRow>
-                <TableHead>👑</TableHead>
                 <TableHead>Player</TableHead>
                 {size.width < 480 ? (
                     <>
                         <TableHead className="text-center">M</TableHead>
                         <TableHead className="text-center">W</TableHead>
                         <TableHead className="text-center">L</TableHead>
+                        <TableHead className="text-center">W/L</TableHead>
                         <TableHead className="text-right">R</TableHead>
                     </>
                 ) : (
@@ -119,6 +125,7 @@ const LeaderboardTableHead = () => {
                         <TableHead className="text-center">Matches</TableHead>
                         <TableHead className="text-center">Wins</TableHead>
                         <TableHead className="text-center">Losses</TableHead>
+                        <TableHead className="text-center">Win Rate</TableHead>
                         <TableHead className="text-right">Rating</TableHead>
                     </>
                 )}

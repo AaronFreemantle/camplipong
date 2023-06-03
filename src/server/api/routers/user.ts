@@ -11,6 +11,7 @@ export const userRouter = createTRPCRouter({
             matches: number;
             wins: number;
             losses: number;
+            winrate: number;
         })[];
         const matches = await ctx.prisma.match.findMany();
         users.map((user) => {
@@ -29,6 +30,7 @@ export const userRouter = createTRPCRouter({
                     (match.playerTwoId === user.id && match.playerTwoScore < match.playerOneScore)
                 );
             }).length;
+            user.winrate = user.matches > 0 ? (user.wins / user.matches) * 100 : 0;
         });
         return users;
     }),

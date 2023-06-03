@@ -1,9 +1,9 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import AddMatch from "~/components/add-match";
-import Champion from "~/components/champion";
 import Leaderboard from "~/components/leaderboard";
 import MatchList from "~/components/match-list";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
 
 const Home: NextPage = () => {
     return (
@@ -13,18 +13,19 @@ const Home: NextPage = () => {
                 <meta name="description" content="Camplify Ping Pong Leaderboard" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <div>
-                <div className="grid-cols-2 xl:grid">
-                    <div>
-                        <AddMatch />
-                        <MatchList />
-                    </div>
-                    <div>
-                        <Champion />
-                        <Leaderboard />
-                    </div>
-                </div>
-            </div>
+            <Tabs defaultValue="leaderboard" className="flex flex-col items-center">
+                <TabsList className="w-min">
+                    <TabsTrigger value="leaderboard">Leaderboard</TabsTrigger>
+                    <TabsTrigger value="matches">Matches</TabsTrigger>
+                </TabsList>
+                <TabsContent value="leaderboard" className="md:w-9/12">
+                    <Leaderboard />
+                </TabsContent>
+                <TabsContent value="matches" className="w-9/12">
+                    <AddMatch />
+                    <MatchList />
+                </TabsContent>
+            </Tabs>
         </>
     );
 };

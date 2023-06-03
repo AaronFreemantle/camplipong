@@ -121,11 +121,13 @@ const AddMatch = () => {
                                                             <div className="flex flex-row items-center justify-center gap-1">
                                                                 <Avatar className="h-8 w-8">
                                                                     <AvatarImage
-                                                                        src={user.profileImageUrl}
-                                                                        alt={user.firstName ?? ""}
+                                                                        src={user.imageUrl}
+                                                                        alt={user.username ?? ""}
                                                                     />
                                                                 </Avatar>
-                                                                {user.firstName} {user.lastName}
+                                                                {user.username
+                                                                    ? user.username
+                                                                    : `${user.firstName ?? ""} ${user.lastName ?? ""}`}
                                                             </div>
                                                         </SelectItem>
                                                     );
