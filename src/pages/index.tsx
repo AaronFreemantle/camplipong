@@ -21,7 +21,7 @@ const Home: NextPage = () => {
                 <TabsContent value="leaderboard" className="md:w-9/12">
                     <Leaderboard />
                 </TabsContent>
-                <TabsContent value="matches" className="w-9/12">
+                <TabsContent value="matches" className="md:w-9/12">
                     <AddMatch />
                     <MatchList />
                 </TabsContent>
