@@ -66,7 +66,6 @@ const LeaderboardRow = ({
     losses,
     winrate,
     elo,
-    champion,
 }: {
     firstName: string;
     lastName: string;
@@ -143,18 +142,13 @@ const LeaderboardSkeleton = () => {
                 <TableBody>
                     {[...(Array(10) as number[])].map((_, i) => (
                         <TableRow key={i}>
-                            <TableCell className="p-2">
-                                <div className="flex justify-center">
-                                    <Skeleton className="h-4 w-6 bg-ctp-green" />
-                                </div>
-                            </TableCell>
                             <TableCell className="p-4">
                                 <div className="flex items-center gap-2">
                                     <Skeleton className="h-8 w-8 rounded-full" />
                                     <Skeleton className="h-4 w-32" />
                                 </div>
                             </TableCell>
-                            <TableCell className="py-4 text-center font-bold">
+                            <TableCell className="py-4 text-center">
                                 <div className="flex justify-center">
                                     <Skeleton className="h-4 w-6" />
                                 </div>
@@ -164,7 +158,12 @@ const LeaderboardSkeleton = () => {
                                     <Skeleton className="h-4 w-6" />
                                 </div>
                             </TableCell>
-                            <TableCell className="py-4 text-center font-bold">
+                            <TableCell className="py-4 text-center">
+                                <div className="flex justify-center">
+                                    <Skeleton className="h-4 w-6" />
+                                </div>
+                            </TableCell>
+                            <TableCell className="py-4 text-center">
                                 <div className="flex justify-center">
                                     <Skeleton className="h-4 w-6" />
                                 </div>
