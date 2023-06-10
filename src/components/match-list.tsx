@@ -1,153 +1,226 @@
 import { api } from "~/utils/api";
 import { Avatar, AvatarImage } from "~/components/ui/avatar";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "~/components/ui/table";
-import { type User } from "@clerk/nextjs/dist/types/server";
-import { type Match } from "@prisma/client";
 import { Skeleton } from "./ui/skeleton";
+import { createColumnHelper, type Column } from "@tanstack/react-table";
+import { ArrowUpDown } from "lucide-react";
+import { Button } from "~/components/ui/button";
+import { DataTable } from "./ui/data-table";
+import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from "@radix-ui/react-tooltip";
 
 const MatchList = () => {
-    const { data: matchesWithPlayers, isLoading } = api.match.getAll.useQuery();
+    const { data: matchesWithPlayers, isLoading, isError } = api.match.getAll.useQuery();
 
-    if (isLoading) {
-        return <MatchListSkeleton />;
+    if (isError) {
+        return <div>Error</div>;
     }
 
-    return (
-        <section className="width-full m-4">
-            <h2 className="m-2 flex justify-center text-2xl">Recent Matches</h2>
-            <Table>
-                <MatchTableHead />
-                <TableBody>
-                    {matchesWithPlayers?.map((matchWithPlayers) => {
-                        const {
-                            match,
-                            players: { playerOne, playerTwo },
-                        } = matchWithPlayers;
+    const tabledata = isLoading
+        ? Array(10).fill({})
+        : matchesWithPlayers?.map((data) => {
+              const {
+                  players: {
+                      playerOne: {
+                          username: playerOneUsername,
+                          firstName: playerOneFirstName,
+                          lastName: playerOneLastName,
+                          imageUrl: playerOneImageUrl,
+                      },
+                      playerTwo: {
+                          username: playerTwoUsername,
+                          firstName: playerTwoFirstName,
+                          lastName: playerTwoLastName,
+                          imageUrl: playerTwoImageUrl,
+                      },
+                  },
+                  match: { playerOneScore, playerOneDiff, playerTwoScore, playerTwoDiff },
+              } = data;
+              return {
+                  date: new Date(data.match.createdAt),
+                  playerOne: {
+                      name: playerOneUsername ?? `${playerOneFirstName ?? ""} ${playerOneLastName ?? ""}`,
+                      imageUrl: playerOneImageUrl,
+                  },
+                  playerOneScore,
+                  playerOneRating: playerOneDiff,
+                  playerTwo: {
+                      name: playerTwoUsername ?? `${playerTwoFirstName ?? ""} ${playerTwoLastName ?? ""}`,
+                      imageUrl: playerTwoImageUrl,
+                  },
+                  playerTwoScore,
+                  playerTwoRating: playerTwoDiff,
+              } satisfies MatchRow;
+          });
 
-                        return <MatchRow key={match.id} match={match} playerOne={playerOne} playerTwo={playerTwo} />;
-                    })}
-                </TableBody>
-            </Table>
-        </section>
+    const tableColumns = isLoading ? skeleton : columns;
+
+    return (
+        <div className="">
+            <DataTable columns={tableColumns} data={tabledata} />
+        </div>
     );
 };
 
 export default MatchList;
 
-const MatchRow = ({ match, playerOne, playerTwo }: { match: Match; playerOne: User; playerTwo: User }) => {
-    return (
-        <TableRow>
-            <TableCell className="p-4 text-center font-bold">
-                {match.playerOneDiff >= 0 && <p className="text-ctp-green">+{match.playerOneDiff}</p>}
-                {match.playerOneDiff < 0 && <p className="text-ctp-red">{match.playerOneDiff}</p>}
-            </TableCell>
-            <TableCell className="p-4">
-                <div className="flex items-center gap-2 text-left">
-                    <Avatar className="h-8 w-8">
-                        <AvatarImage src={playerOne.imageUrl} alt={playerOne.firstName ?? ""} />
-                    </Avatar>
-                    <p className="hidden sm:block">
-                        {playerOne.username
-                            ? playerOne.username
-                            : `${playerOne.firstName ?? ""} ${playerOne.lastName ?? ""}`}
-                    </p>
-                </div>
-            </TableCell>
-            <TableCell className="py-4 text-center font-bold">
-                <p>{match.playerOneScore}</p>
-            </TableCell>
-            <TableCell className="px-0 py-4 text-center">
-                <p>vs</p>
-            </TableCell>
-            <TableCell className="py-4 text-center font-bold">
-                <p>{match.playerTwoScore}</p>
-            </TableCell>
-            <TableCell className="justify-end p-4">
-                <div className="flex items-center justify-end gap-2 text-right">
-                    <p className="hidden sm:block">
-                        {playerTwo.username
-                            ? playerTwo.username
-                            : `${playerTwo.firstName ?? ""} ${playerTwo.lastName ?? ""}`}
-                    </p>
-                    <Avatar className="h-8 w-8">
-                        <AvatarImage src={playerTwo.imageUrl} alt={playerTwo.firstName ?? ""} />
-                    </Avatar>
-                </div>
-            </TableCell>
-            <TableCell className="p-4 text-center font-bold">
-                {match.playerTwoDiff >= 0 && <p className="text-ctp-green">+{match.playerTwoDiff}</p>}
-                {match.playerTwoDiff < 0 && <p className="text-ctp-red">{match.playerTwoDiff}</p>}
-            </TableCell>
-        </TableRow>
-    );
+type MatchRow = {
+    date: Date;
+    playerOne: {
+        name: string;
+        imageUrl: string;
+    };
+    playerOneScore: number;
+    playerOneRating: number;
+    playerTwo: {
+        name: string;
+        imageUrl: string;
+    };
+    playerTwoScore: number;
+    playerTwoRating: number;
 };
 
-const MatchTableHead = () => {
-    return (
-        <TableHeader>
-            <TableRow>
-                <TableHead className="p-1 text-center">Rating +/-</TableHead>
-                <TableHead className="p-1 px-4 text-left">Player 1</TableHead>
-                <TableHead className="p-1 text-center">P1 Score</TableHead>
-                <TableHead className="p-0 text-center"></TableHead>
-                <TableHead className="p-1 text-center">P2 Score</TableHead>
-                <TableHead className="p-1 px-4 text-right">Player 2</TableHead>
-                <TableHead className="p-1 text-center">Rating +/-</TableHead>
-            </TableRow>
-        </TableHeader>
-    );
-};
+const columnHelper = createColumnHelper<MatchRow>();
 
-const MatchListSkeleton = () => {
-    return (
-        <section className="width-full m-4">
-            <h2 className="m-2 flex justify-center text-2xl">Recent Matches</h2>
-            <Table>
-                <MatchTableHead />
-                <TableBody>
-                    {[...(Array(10) as number[])].map((_, i) => (
-                        <TableRow key={i}>
-                            <TableCell className="p-2">
-                                <div className="flex justify-center">
-                                    <Skeleton className="h-4 w-6 bg-ctp-green" />
-                                </div>
-                            </TableCell>
-                            <TableCell className="p-4">
-                                <div className="flex items-center gap-2">
-                                    <Skeleton className="h-8 w-8 rounded-full" />
-                                    <Skeleton className="h-4 w-16" />
-                                </div>
-                            </TableCell>
-                            <TableCell className="py-4 text-center font-bold">
-                                <div className="flex justify-center">
-                                    <Skeleton className="h-4 w-8" />
-                                </div>
-                            </TableCell>
-                            <TableCell className="px-0 py-4 text-center">
-                                <div className="flex justify-center">
-                                    <Skeleton className="h-4 w-4" />
-                                </div>
-                            </TableCell>
-                            <TableCell className="py-4 text-center font-bold">
-                                <div className="flex justify-center">
-                                    <Skeleton className="h-4 w-8" />
-                                </div>
-                            </TableCell>
-                            <TableCell className="justify-end p-4">
-                                <div className="flex items-center justify-end gap-2">
-                                    <Skeleton className="h-4 w-16" />
-                                    <Skeleton className="h-8 w-8 rounded-full" />
-                                </div>
-                            </TableCell>
-                            <TableCell className="p-2 text-center font-bold">
-                                <div className="flex justify-center">
-                                    <Skeleton className="h-4 w-6 bg-ctp-red" />
-                                </div>
-                            </TableCell>
-                        </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
-        </section>
-    );
-};
+function header(label: string) {
+    return ({ column }: { column: Column<MatchRow> }) => {
+        return (
+            <div className="text-center">
+                <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+                    {label}
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            </div>
+        );
+    };
+}
+
+const columns = [
+    columnHelper.accessor("date", {
+        header: header("Date"),
+        cell: (props) => (
+            <TooltipProvider>
+                <Tooltip>
+                    <TooltipTrigger asChild>
+                        <div className="text-center font-bold">
+                            {props.getValue().toLocaleString("en", {
+                                weekday: "short",
+                                day: "numeric",
+                                month: "numeric",
+                            })}
+                        </div>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                        <div className="text-center font-bold">
+                            {props.getValue().toLocaleString("en", {
+                                weekday: "long",
+                                day: "numeric",
+                                month: "numeric",
+                                year: "numeric",
+                                hour: "numeric",
+                                minute: "numeric",
+                            })}
+                        </div>
+                    </TooltipContent>
+                </Tooltip>
+            </TooltipProvider>
+        ),
+    }),
+    columnHelper.accessor("playerOneRating", {
+        header: header("Rating +/-"),
+        cell: (props) => {
+            const rating = props.getValue();
+            return (
+                <div className="text-center">
+                    {rating >= 0 && <p className="font-bold text-ctp-green">+{rating}</p>}
+                    {rating < 0 && <p className="font-bold text-ctp-red">{rating}</p>}
+                </div>
+            );
+        },
+    }),
+    columnHelper.accessor("playerOne", {
+        header: () => <div className="text-center">Player 1</div>,
+        cell: (props) => {
+            const { name, imageUrl } = props.getValue();
+
+            return (
+                <div className="flex items-center gap-2">
+                    <Avatar className="h-8 w-8">
+                        <AvatarImage src={imageUrl} alt={name} />
+                    </Avatar>
+                    <p className="">{name}</p>
+                </div>
+            );
+        },
+    }),
+    columnHelper.accessor("playerOneScore", {
+        header: header("P1 Score"),
+        cell: (props) => <div className="text-center font-bold">{props.getValue()}</div>,
+    }),
+    columnHelper.accessor("playerTwoScore", {
+        header: header("P2 Score"),
+        cell: (props) => <div className="text-center font-bold">{props.getValue()}</div>,
+    }),
+    columnHelper.accessor("playerTwo", {
+        header: () => <div className="text-center">Player 2</div>,
+        cell: (props) => {
+            const { name, imageUrl } = props.getValue();
+
+            return (
+                <div className="flex items-center gap-2">
+                    <Avatar className="h-8 w-8">
+                        <AvatarImage src={imageUrl} alt={name} />
+                    </Avatar>
+                    <p className="">{name}</p>
+                </div>
+            );
+        },
+    }),
+    columnHelper.accessor("playerTwoRating", {
+        header: header("Rating +/-"),
+        cell: (props) => {
+            const rating = props.getValue();
+            return (
+                <div className="text-center">
+                    {rating >= 0 && <p className="font-bold text-ctp-green">+{rating}</p>}
+                    {rating < 0 && <p className="font-bold text-ctp-red">{rating}</p>}
+                </div>
+            );
+        },
+    }),
+];
+
+const skeleton = [
+    columnHelper.accessor("playerOneRating", {
+        header: header("Rating +/-"),
+        cell: () => <Skeleton className="m-auto h-4 w-8" />,
+    }),
+    columnHelper.accessor("playerOne", {
+        header: () => <div className="text-center">Player 1</div>,
+        cell: () => (
+            <div className="flex items-center gap-2">
+                <Skeleton className="h-8 w-8 rounded-full" />
+                <Skeleton className="h-4 w-32" />
+            </div>
+        ),
+    }),
+    columnHelper.accessor("playerOneScore", {
+        header: header("P1 Score"),
+        cell: () => <Skeleton className="m-auto h-4 w-8" />,
+    }),
+    columnHelper.accessor("playerTwoScore", {
+        header: header("P1 Score"),
+        cell: () => <Skeleton className="m-auto h-4 w-8" />,
+    }),
+    columnHelper.accessor("playerTwo", {
+        header: () => <div className="text-center">Player 2</div>,
+        cell: () => (
+            <div className="flex items-center gap-2">
+                <Skeleton className="h-8 w-8 rounded-full" />
+                <Skeleton className="h-4 w-32" />
+            </div>
+        ),
+    }),
+    columnHelper.accessor("playerTwoRating", {
+        header: header("Rating +/-"),
+        cell: () => <Skeleton className="m-auto h-4 w-8" />,
+    }),
+];

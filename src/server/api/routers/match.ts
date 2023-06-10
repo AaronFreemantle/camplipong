@@ -43,7 +43,6 @@ export const matchRouter = createTRPCRouter({
                         createdAt: "desc",
                     },
                 ],
-                take: 50,
             })
         );
     }),

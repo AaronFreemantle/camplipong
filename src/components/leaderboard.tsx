@@ -6,8 +6,41 @@ import { ArrowUpDown } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import { Skeleton } from "./ui/skeleton";
 
-export type UserStatistic = {
-    id: string;
+const Leaderboard = () => {
+    const { data: users, isLoading, isError } = api.user.getAllWithMatches.useQuery();
+
+    if (isError) {
+        return <div>Error</div>;
+    }
+
+    const tabledata = isLoading
+        ? Array(10).fill({})
+        : users?.map((user) => {
+              return {
+                  player: {
+                      name: user.username ?? `${user.firstName ?? ""} ${user.lastName ?? ""}`,
+                      imageUrl: user.imageUrl,
+                  },
+                  matches: user.matches,
+                  wins: user.wins,
+                  losses: user.losses,
+                  winrate: user.winrate,
+                  elo: (user.publicMetadata.elo as number) ?? 0,
+              } satisfies UserStatistic;
+          });
+
+    const tableColumns = isLoading ? skeleton : columns;
+
+    return (
+        <div className="">
+            <DataTable columns={tableColumns} data={tabledata} defaultSort={[{ id: "elo", desc: true }]} />
+        </div>
+    );
+};
+
+export default Leaderboard;
+
+type UserStatistic = {
     player: {
         name: string;
         imageUrl: string;
@@ -34,7 +67,7 @@ function header(label: string) {
     };
 }
 
-export const columns = [
+const columns = [
     columnHelper.accessor("player", {
         header: header("Player"),
         cell: (props) => {
@@ -72,7 +105,7 @@ export const columns = [
     }),
 ];
 
-export const skeleton = [
+const skeleton = [
     columnHelper.accessor("player", {
         header: header("Player"),
         cell: () => (
@@ -103,37 +136,3 @@ export const skeleton = [
         cell: () => <Skeleton className="m-auto h-4 w-16" />,
     }),
 ];
-const Leaderboard = () => {
-    const { data: users, isLoading, isError } = api.user.getAllWithMatches.useQuery();
-
-    if (isError) {
-        return <div>Error</div>;
-    }
-
-    const tabledata = isLoading
-        ? Array(10).fill({})
-        : users?.map((user) => {
-              return {
-                  id: user.id,
-                  player: {
-                      name: user.username ?? `${user.firstName ?? ""} ${user.lastName ?? ""}`,
-                      imageUrl: user.imageUrl,
-                  },
-                  matches: user.matches,
-                  wins: user.wins,
-                  losses: user.losses,
-                  winrate: user.winrate,
-                  elo: (user.publicMetadata.elo as number) ?? 0,
-              } satisfies UserStatistic;
-          });
-
-    const tableColumns = isLoading ? skeleton : columns;
-
-    return (
-        <div className="">
-            <DataTable columns={tableColumns} data={tabledata} defaultSort={[{ id: "elo", desc: true }]} />
-        </div>
-    );
-};
-
-export default Leaderboard;
