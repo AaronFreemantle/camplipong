@@ -6,11 +6,11 @@ import { createTRPCRouter, privateProcedure, publicProcedure } from "~/server/ap
 import { calculateEloDiff } from "~/utils/elo";
 
 const addUserDataToMatches = async (matches: Match[]) => {
-    const playerOneIds = matches.map((match) => match.playerOneId);
-    const playerTwoIds = matches.map((match) => match.playerTwoId);
+    const playerOneIds = new Set(matches.map((match) => match.playerOneId));
+    const playerTwoIds = new Set(matches.map((match) => match.playerTwoId));
     const users = await clerkClient.users.getUserList({
         userId: [...playerOneIds, ...playerTwoIds],
-        limit: 110,
+        limit: 100,
     });
 
     return matches.map((match) => {
